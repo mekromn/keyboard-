@@ -1,6 +1,15 @@
-# Keyboard privacy cleanup
+# Meboard
 
-Reproducible reverse-engineering workspace for physically removing telemetry and unnecessary background networking from the supplied Gboard 18.0.3 arm64 bundle while preserving selected keyboard functionality.
+Reproducible reverse-engineering workspace for building **Meboard**, a coexistence-safe privacy-focused keyboard derived from the supplied Gboard 18.0.3 arm64 bundle while physically removing telemetry and unnecessary background networking.
+
+## Identity
+
+- App name: `Meboard`
+- Coexistence package/application ID: `com.mekromn.meboard`
+- Stock/system Gboard remains untouched and can stay installed/enabled.
+- Meboard uses its own signing identity and must not attempt to update or replace `com.google.android.inputmethod.latin`.
+
+The implementation must update package-bound manifest authorities, custom permissions, deep links, split metadata, package literals that identify the running app, and other self-references required for clean coexistence. Java/smali class namespaces do not need cosmetic renaming when they are implementation class names rather than application identity.
 
 ## Current source bundle
 
@@ -34,7 +43,7 @@ Network code is retained only for features explicitly chosen to remain, such as 
 
 ## Acceptance
 
-A build is not accepted until static verification confirms the targeted telemetry implementation and registrations are absent and runtime testing shows no unsolicited network activity during idle use or ordinary offline typing.
+A build is not accepted until static verification confirms the targeted telemetry implementation and registrations are absent, the package is `com.mekromn.meboard`, the visible keyboard name is Meboard, it installs alongside system Gboard, and runtime testing shows no unsolicited network activity during idle use or ordinary offline typing.
 
 See:
 
