@@ -1,0 +1,26 @@
+name: Bootstrap Zipalign Runtime
+
+on:
+  push:
+    paths:
+      - '.github/workflows/bootstrap-zipalign-runtime.yml'
+  workflow_dispatch:
+
+jobs:
+  runtime:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Collect libc++ runtime
+        shell: bash
+        run: |
+          set -euxo pipefail
+          BT=$(ls -1d "$ANDROID_SDK_ROOT"/build-tools/* | sort -V | tail -1)
+          echo "Using $BT"
+          mkdir -p out
+          find "$BT" -name 'libc++.so' -print -exec cp {} out/libc++.so \;
+          test -s out/libc++.so
+      - uses: actions/upload-artifact@v4
+        with:
+          name: keyboard-zipalign-runtime
+          path: out/libc++.so
+          retention-days: 7
