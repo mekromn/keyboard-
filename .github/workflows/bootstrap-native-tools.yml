@@ -1,0 +1,28 @@
+name: Bootstrap Native Tools
+
+on:
+  push:
+    paths:
+      - '.github/workflows/bootstrap-native-tools.yml'
+  workflow_dispatch:
+
+jobs:
+  wheels:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Download native analysis wheels
+        run: |
+          set -euxo pipefail
+          mkdir -p wheelhouse
+          python -m pip download --only-binary=:all: --dest wheelhouse \
+            capstone==5.0.6 pyelftools==0.32 lief==0.17.0
+          ls -lh wheelhouse
+      - uses: actions/upload-artifact@v4
+        with:
+          name: keyboard-native-wheelhouse
+          path: wheelhouse
+          if-no-files-found: error
+          retention-days: 7
