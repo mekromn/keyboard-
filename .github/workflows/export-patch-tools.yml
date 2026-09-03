@@ -5,6 +5,7 @@ on:
       - '.github/workflows/export-patch-tools.yml'
   workflow_dispatch:
 
+# State export refresh: 2026-09-03
 jobs:
   export:
     runs-on: ubuntu-latest
