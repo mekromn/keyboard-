@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-"""Physically delete module wrappers orphaned by Perfetto and on-device-metrics removal."""
+"""Physically delete module wrappers orphaned by telemetry implementation removal."""
 from pathlib import Path
 import re
 
 ROOT = Path('/mnt/data/meboard_work/buildtree')
-TARGETS = ['qbj', 'pzy']
+TARGETS = ['qbj', 'pzy', 'qjg']
 
 classes = {}
 for p in ROOT.glob('smali*/**/*.smali'):
