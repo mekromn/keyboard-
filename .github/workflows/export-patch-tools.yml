@@ -1,0 +1,22 @@
+name: Export Meboard patch tools
+on:
+  push:
+    paths:
+      - '.github/workflows/export-patch-tools.yml'
+  workflow_dispatch:
+
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Package patch state
+        run: |
+          mkdir -p out
+          cp -a tools docs README.md out/
+          tar -czf meboard-patch-state.tar.gz -C out .
+      - uses: actions/upload-artifact@v4
+        with:
+          name: meboard-patch-state
+          path: meboard-patch-state.tar.gz
+          retention-days: 7
