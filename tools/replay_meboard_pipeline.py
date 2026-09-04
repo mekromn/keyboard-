@@ -45,6 +45,7 @@ PATCHES = [
     'remove_dynamic_federated_trainer.py',
     'remove_account_identity_sources.py',
     'remove_native_federated_runner.py',
+    'remove_account_receiver_outline.py',
     'remove_account_status_module.py',
     'remove_cronet_telemetry.py',
     'remove_primes_transport_metrics.py',
@@ -54,6 +55,7 @@ PATCHES = [
     'remove_dead_clearcut_provider_loads.py',
     'remove_standalone_metrics_modules.py',
     'remove_handwriting_metrics_module.py',
+    'remove_latin5_metrics_module.py',
 ]
 
 CHECKPOINT_AFTER = {
@@ -63,6 +65,7 @@ CHECKPOINT_AFTER = {
     'remove_dead_clearcut_provider_loads.py': '04-dead-clearcut-loads',
     'remove_standalone_metrics_modules.py': '05-standalone-metrics',
     'remove_handwriting_metrics_module.py': '06-handwriting-metrics',
+    'remove_latin5_metrics_module.py': '07-latin5-metrics',
 }
 
 
@@ -148,7 +151,7 @@ def main() -> None:
 
     for script in PATCHES:
         run(sys.executable, TOOLS / script)
-        if not args.no_checkpoints and script in CHECKPOINT_AFTER:
+        if not args.no-checkpoints and script in CHECKPOINT_AFTER:
             build(args.apktool, args.aapt2, CHECKPOINT_AFTER[script])
 
     final = build(args.apktool, args.aapt2, 'current')
