@@ -3,9 +3,11 @@ on:
   push:
     paths:
       - '.github/workflows/export-patch-tools.yml'
+      - 'tools/**'
+      - 'docs/**'
+      - 'README.md'
   workflow_dispatch:
 
-# State export refresh: 2026-09-03 15:55 PT
 jobs:
   export:
     runs-on: ubuntu-latest
