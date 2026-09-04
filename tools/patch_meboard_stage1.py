@@ -40,6 +40,11 @@ for apk,libname in [
 ET.register_namespace('android','http://schemas.android.com/apk/res/android')
 tree=ET.parse(ROOT/'AndroidManifest.xml'); root=tree.getroot()
 root.set('package',NEW)
+# Remove Android's legacy package-migration alias. Meboard is an independent
+# coexistence package, not a renamed system Latin IME replacement.
+for child in list(root):
+    if child.tag == 'original-package':
+        root.remove(child)
 for a in ['coreApp',ANDROID+'requiredSplitTypes',ANDROID+'splitTypes']:
     root.attrib.pop(a,None)
 
