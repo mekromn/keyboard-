@@ -48,6 +48,7 @@ def main() -> None:
     required = [
         ROOT / 'replay_meboard_pipeline.py',
         ROOT / 'verify_eqt_registry_registers.py',
+        ROOT / 'repair_eqt_reused_discriminators.py',
         *(ROOT / name for name in CONTINUATION),
         APKTOOL,
         AAPT2,
@@ -59,6 +60,12 @@ def main() -> None:
     run(sys.executable, ROOT / 'replay_meboard_pipeline.py', '--no-checkpoints')
     for script in CONTINUATION:
         run(sys.executable, ROOT / script)
+
+    # Some removed registry providers also initialized discriminator registers
+    # consumed by the immediately following retained providers. Restore only
+    # those shared constants after all stage-16 registry compaction is complete.
+    run(sys.executable, ROOT / 'repair_eqt_reused_discriminators.py')
+
     OUTPUT.parent.mkdir(parents=True, exist_ok=True)
     run(sys.executable, ROOT / 'verify_eqt_registry_registers.py')
     run(
