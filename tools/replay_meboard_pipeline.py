@@ -22,6 +22,8 @@ DEFAULT_APKTOOL = Path('/mnt/data/meboard_tools/android/apktool/apktool.jar')
 DEFAULT_AAPT2 = Path('/mnt/data/meboard_tools/android/build-tools/aapt2')
 TOOLS = Path(__file__).resolve().parent
 
+# Backfilled orphan cleanups must run before the broader removers that assert
+# no dangling references. Account isolation precedes the final Cronet assertion.
 PATCHES = [
     'prune_removed_provider_cases.py',
     'prune_aui_feedback.py',
@@ -50,13 +52,17 @@ PATCHES = [
     'strip_mixed_feature_metrics.py',
     'delete_mixed_feature_metric_processors.py',
     'remove_dead_clearcut_provider_loads.py',
+    'remove_standalone_metrics_modules.py',
+    'remove_handwriting_metrics_module.py',
 ]
 
 CHECKPOINT_AFTER = {
     'remove_primes_processor.py': '01-core-metrics',
     'remove_legacy_clearcut_adapter.py': '02-primes-clearcut',
     'remove_cronet_telemetry.py': '03-account-network',
-    'remove_dead_clearcut_provider_loads.py': '04-current',
+    'remove_dead_clearcut_provider_loads.py': '04-dead-clearcut-loads',
+    'remove_standalone_metrics_modules.py': '05-standalone-metrics',
+    'remove_handwriting_metrics_module.py': '06-handwriting-metrics',
 }
 
 
@@ -127,6 +133,7 @@ def main() -> None:
         zf.extractall(WORK / 'input')
     base = find_nested(WORK / 'input', 'base.apk')
     density = find_nested(WORK / 'input', 'split_config.xxhdpi.apk')
+    # Normalize nested-bundle locations expected by the surgical scripts.
     for src in list((WORK / 'input').rglob('*.apk')):
         dst = WORK / 'input' / src.name
         if src != dst:
