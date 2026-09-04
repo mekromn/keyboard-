@@ -93,7 +93,16 @@ lat=ROOT/'smali/com/google/android/apps/inputmethod/latin/LatinApp.smali'
 s=lat.read_text()
 start=s.index('    :cond_7\n    :goto_5\n    const-string v0, "LatinApp.initializeMetricsFactories"')
 catch=s.index('    :catchall_5\n',start)
-replacement='''    :cond_7\n    :goto_5\n    :try_end_a\n    .catchall {:try_start_a .. :try_end_a} :catchall_5\n\n    invoke-static {}, Landroid/os/Trace;->endSection()V\n\n    return-void\n\n'''
+replacement='''    :cond_7
+    :goto_5
+    :try_end_a
+    .catchall {:try_start_a .. :try_end_a} :catchall_5
+
+    invoke-static {}, Landroid/os/Trace;->endSection()V
+
+    return-void
+
+'''
 s=s[:start]+replacement+s[catch:]
 lat.write_text(s)
 
@@ -115,6 +124,16 @@ for i,l in enumerate(method):
     if 'new-array v11, v11, [Lpth;' in l:
         arr_i=i; break
 if arr_i is None: raise SystemExit('aI module array not found')
+# Slot 0 and slot 4 carried reusable integer initializers in the original
+# straight-line registry builder. Removing those module construction blocks must
+# not remove the constants because later retained factories still consume them.
+# Android's verifier rejects aI() before startup if either register is undefined.
+method[arr_i + 1:arr_i + 1] = [
+    '    const/4 v13, 0x0',
+    '',
+    '    const/16 v17, 0xf',
+    '',
+]
 kept_count=0x122-len(REMOVE)
 for j in range(arr_i-1,max(-1,arr_i-8),-1):
     if re.search(r'const/16 v11, 0x122',method[j]):
