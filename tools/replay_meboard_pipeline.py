@@ -97,6 +97,7 @@ def decode(apktool: Path, apk: Path, out: Path) -> None:
 
 
 def build(apktool: Path, aapt2: Path, label: str) -> Path:
+    run(sys.executable, TOOLS / 'verify_eqt_registry_registers.py')
     out = WORK / 'checkpoints' / f'Meboard-{label}-unsigned.apk'
     out.parent.mkdir(parents=True, exist_ok=True)
     run('java', '-jar', apktool, 'b', '--aapt', aapt2, '-f', '-j', '4', '-o', out, WORK / 'buildtree')
@@ -122,7 +123,7 @@ def main() -> None:
     for p in (args.bundle, args.apktool, args.aapt2):
         if not p.is_file():
             raise SystemExit(f'missing required input/tool: {p}')
-    for name in ['patch_meboard_stage1.py', *PATCHES]:
+    for name in ['patch_meboard_stage1.py', 'verify_eqt_registry_registers.py', *PATCHES]:
         if not (TOOLS / name).is_file():
             raise SystemExit(f'missing patch script: {TOOLS / name}')
 
@@ -151,7 +152,7 @@ def main() -> None:
 
     for script in PATCHES:
         run(sys.executable, TOOLS / script)
-        if not args.no_checkpoints and script in CHECKPOINT_AFTER:
+        if not args.no-checkpoints and script in CHECKPOINT_AFTER:
             build(args.apktool, args.aapt2, CHECKPOINT_AFTER[script])
 
     final = build(args.apktool, args.aapt2, 'current')
