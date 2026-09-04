@@ -151,7 +151,7 @@ def main() -> None:
 
     for script in PATCHES:
         run(sys.executable, TOOLS / script)
-        if not args.no-checkpoints and script in CHECKPOINT_AFTER:
+        if not args.no_checkpoints and script in CHECKPOINT_AFTER:
             build(args.apktool, args.aapt2, CHECKPOINT_AFTER[script])
 
     final = build(args.apktool, args.aapt2, 'current')
