@@ -2,8 +2,9 @@
 """Replay the verified Meboard privacy pipeline through stage 16.
 
 Stage 16 includes the stage-12 base removals plus detached feature/Latin metrics,
-Jarvis prompt metrics, and the hidden Keyhound collection/export module. The
-result remains unsigned for static audit and later native/network verification.
+Jarvis prompt metrics, hidden Keyhound collection/export removal, the Meboard
+stable-signer runtime adaptation, and restoration of fused density resources.
+The result remains unsigned for static audit and later native/network verification.
 """
 from pathlib import Path
 import hashlib
@@ -27,6 +28,7 @@ CONTINUATION = [
     'remove_detached_latin_metrics.py',
     'remove_jarvis_metrics_processors.py',
     'remove_keyhound_collection_module.py',
+    'fix_runtime_identity_and_split_resources.py',
 ]
 
 
