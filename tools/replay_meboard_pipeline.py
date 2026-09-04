@@ -145,6 +145,13 @@ def main() -> None:
 
     decode(args.apktool, base, WORK / 'decoded' / 'base')
     decode(args.apktool, density, WORK / 'decoded' / 'density')
+    # Keep the untouched generated registry before stage-1 mutates decoded/base.
+    # Later acceptance checks prove that every retained Meboard factory remains
+    # an exact ordered subsequence with its original constructor constants.
+    shutil.copy2(
+        WORK / 'decoded' / 'base' / 'smali' / 'eqt.smali',
+        WORK / 'original_eqt.smali',
+    )
     run(sys.executable, TOOLS / 'patch_meboard_stage1.py')
     shutil.copytree(WORK / 'decoded' / 'base', WORK / 'buildtree')
     if not args.no_checkpoints:
