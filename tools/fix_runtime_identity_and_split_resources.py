@@ -1,16 +1,16 @@
 #!/usr/bin/env python3
-"""Make the re-signed monolithic Meboard runtime-safe.
+"""Restore split-backed resources required by the monolithic Meboard APK.
 
-The original Gboard bundle assumes Google's production signing certificates and
-resolves several drawable references from the xxhdpi split at install time. A
-standalone Meboard APK intentionally has a different stable signer and fuses the
-split resources into the base APK. This pass therefore:
+The original Gboard bundle resolves several drawable references from the xxhdpi
+split at install time. Meboard fuses that split into a standalone APK, while
+Apktool initially decodes the temporarily absent references as ``@null``.
 
-1. physically removes the Google-only self-signature failure branch; and
-2. restores resource-ID references that Apktool decoded as ``@null`` while the
-   density split was temporarily absent.
-
-The pass is assertion-heavy and targets only Gboard 18.0.3.954559732 arm64.
+Certificate-whitelist removal deliberately does *not* live in this stage. The
+later ``remove_signature_whitelist_guard.py`` pass owns the producer, shared
+Runnable branch, comparator, and embedded digest removal as one atomic physical
+excision. Keeping these responsibilities separate makes stage 16 independently
+replayable and prevents a partial/no-op signature patch from satisfying the
+physical-removal policy.
 """
 from __future__ import annotations
 
@@ -18,36 +18,6 @@ import re
 from pathlib import Path
 
 ROOT = Path('/mnt/data/meboard_work/buildtree')
-
-
-def remove_google_signature_gate() -> None:
-    path = ROOT / 'smali' / 'mm.smali'
-    text = path.read_text()
-    pattern = re.compile(r'(?ms)^    :pswitch_b\n.*?(?=^    :pswitch_c\n)')
-    match = pattern.search(text)
-    if not match:
-        raise SystemExit('mm.run signature-check switch branch not found')
-    block = match.group(0)
-    required = [
-        'Lrpv;->a(Landroid/content/Context;Ljava/lang/String;)Z',
-        'APK is signed by unrecognized certificates:',
-        'Ljava/lang/IllegalStateException;',
-    ]
-    missing = [needle for needle in required if needle not in block]
-    if missing:
-        raise SystemExit(f'mm.run pswitch_b is not the expected signature gate: {missing}')
-    replacement = (
-        '    :pswitch_b\n'
-        '    # Google production-certificate allowlist removed for the independently\n'
-        '    # signed Meboard coexistence package.\n'
-        '    return-void\n\n'
-    )
-    text = text[:match.start()] + replacement + text[match.end():]
-    for needle in required:
-        if needle in text:
-            raise SystemExit(f'signature-gate implementation remains after removal: {needle}')
-    path.write_text(text)
-    print('mm.run: physically removed Google-only certificate rejection branch')
 
 
 def replace_nulls(path: Path, targets: list[str]) -> None:
@@ -99,7 +69,6 @@ def restore_split_references() -> None:
 
 
 def main() -> None:
-    remove_google_signature_gate()
     restore_split_references()
 
 
