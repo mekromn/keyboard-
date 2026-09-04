@@ -47,6 +47,7 @@ def sha256(path: Path) -> str:
 def main() -> None:
     required = [
         ROOT / 'replay_meboard_pipeline.py',
+        ROOT / 'verify_eqt_registry_registers.py',
         *(ROOT / name for name in CONTINUATION),
         APKTOOL,
         AAPT2,
@@ -59,6 +60,7 @@ def main() -> None:
     for script in CONTINUATION:
         run(sys.executable, ROOT / script)
     OUTPUT.parent.mkdir(parents=True, exist_ok=True)
+    run(sys.executable, ROOT / 'verify_eqt_registry_registers.py')
     run(
         'java', '-jar', APKTOOL, 'b', '--aapt', AAPT2,
         '-f', '-j', '4', '-o', OUTPUT, WORK / 'buildtree',
