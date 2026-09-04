@@ -1,0 +1,60 @@
+{
+  "schema": 1,
+  "checkpoint_id": "20260904T231709Z",
+  "created_utc": "2026-09-04T23:17:47.955565Z",
+  "project": "Meboard",
+  "stage_label": "recovery-anchor-before-stage19-reconstruction",
+  "source_state": {
+    "repository": "mekromn/keyboard-",
+    "ref": "meboard/offline-continuation-20260904",
+    "captured_commit": "1fba36df0b0187b51b4642ef307a9ad59c40895f",
+    "checkpoint_policy_commit": "eeb5febaf1a160b25c0574b6c790d37a497abf62",
+    "checkpoint_tool_commit": "c954d4ba09141eb84ffecce7148f563b9efaecf8"
+  },
+  "artifact_truth": {
+    "highest_apk_physically_present_at_capture": "Meboard-stage16-signature-guard-fix.apk",
+    "stage16_apk_sha256": "5a47c72c6a613c50b9259d3a25d2d38d84bd26ad1f3433c6afc902ff72caa432",
+    "stage18b_artifact_present_at_capture": false,
+    "stage18b_historical_reported_sha256": "5423575fcfac13735f9b88c7ca8034e0989fb8e009b6e6367a486a87d2d5c066",
+    "stage18b_status": "reconstruction target only; rebuild and reverify before claiming completion"
+  },
+  "critical_input_hashes": {
+    "source_aspk_sha256": "665e4fb3c04874037c1b6477ef734fb38934e300a4f4197978dd6d4c72d28a10",
+    "signing_archive_sha256": "f5270139ce5482df462ad2cc3c96607ec0db07e0af3354f4435ee2d37bb86306",
+    "offline_kit_sha256": "70716be377ed2a2fd8dda29653b59164ad32eebc88e6ad2e7b19de674ddf0be6"
+  },
+  "archives": {
+    "public": {
+      "size": 38176643,
+      "sha256": "d90a4afdb3a6ac93558c2a9a174d83a99edc336230798b6759b6c7f8a92c813a",
+      "zip_integrity": "passed",
+      "local_mirror_byte_identical": true,
+      "library_round_trip_byte_identical": true,
+      "library_path": "/Meboard/Checkpoints/20260904T231709Z/Meboard-Checkpoint-20260904T231709Z-PUBLIC.zip",
+      "library_file_id": "libfile_2aeeec47e7cc8191a8af78e8c5aa7c0f"
+    },
+    "private": {
+      "size": 159911091,
+      "sha256": "186eb2e7cbbad4ac515f2abb2d13b0a51bd8c8d74389069d8c6959ac58645d35",
+      "zip_integrity": "passed",
+      "local_mirror_byte_identical": true,
+      "library_round_trip_byte_identical": true,
+      "library_path": "/Meboard/Checkpoints/20260904T231709Z/Meboard-Checkpoint-20260904T231709Z-PRIVATE.zip",
+      "library_file_id": "libfile_9976372801bc819183301e3bc916497d"
+    }
+  },
+  "private_material_policy": {
+    "public_repository_contains_private_material": false,
+    "public_archive_contains_source_or_rebuilt_apk": false,
+    "public_archive_contains_signing_key": false,
+    "private_archive_must_not_be_published": true
+  },
+  "verification": {
+    "source_copy_sha256_checked": true,
+    "archive_mirror_sha256_checked": true,
+    "library_download_sha256_checked": true,
+    "library_download_cmp_checked": true,
+    "library_download_zip_integrity_checked": true,
+    "result": "passed"
+  }
+}
