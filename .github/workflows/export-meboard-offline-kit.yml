@@ -1,0 +1,66 @@
+name: Export Meboard offline replay kit
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/export-meboard-offline-kit.yml'
+      - 'tools/**'
+      - 'docs/**'
+      - 'README.md'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out reproducible patch pipeline
+        uses: actions/checkout@v4
+
+      - name: Assemble APK rebuild toolchain
+        shell: bash
+        run: |
+          set -euo pipefail
+          KIT="$RUNNER_TEMP/meboard-offline-kit"
+          mkdir -p "$KIT/repository" "$KIT/android/apktool" "$KIT/android/build-tools/lib"
+
+          cp -a tools docs README.md "$KIT/repository/"
+
+          curl --fail --location --retry 3 \
+            --output "$KIT/android/apktool/apktool.jar" \
+            https://github.com/iBotPeaches/Apktool/releases/download/v3.0.3/apktool_3.0.3.jar
+
+          BUILD_TOOLS="$(find "$ANDROID_SDK_ROOT/build-tools" -mindepth 1 -maxdepth 1 -type d | sort -V | tail -n 1)"
+          test -n "$BUILD_TOOLS"
+          cp "$BUILD_TOOLS/aapt2" "$KIT/android/build-tools/aapt2"
+          cp "$BUILD_TOOLS/zipalign" "$KIT/android/build-tools/zipalign"
+          cp "$BUILD_TOOLS/apksigner" "$KIT/android/build-tools/apksigner"
+          cp "$BUILD_TOOLS/lib/apksigner.jar" "$KIT/android/build-tools/lib/apksigner.jar"
+          if [ -d "$BUILD_TOOLS/lib64" ]; then
+            cp -a "$BUILD_TOOLS/lib64" "$KIT/android/build-tools/"
+          fi
+          chmod +x "$KIT/android/build-tools/aapt2" \
+                   "$KIT/android/build-tools/zipalign" \
+                   "$KIT/android/build-tools/apksigner"
+
+          cat > "$KIT/CONTENTS.txt" <<EOF
+          Meboard offline replay kit
+          Source commit: $GITHUB_SHA
+          APK input and private signing key are intentionally excluded.
+          Included: repository patch scripts/docs, Apktool 3.0.3, aapt2, zipalign, apksigner.
+          EOF
+
+          tar -C "$RUNNER_TEMP" -czf "$RUNNER_TEMP/meboard-offline-kit.tar.gz" meboard-offline-kit
+          sha256sum "$RUNNER_TEMP/meboard-offline-kit.tar.gz" > "$RUNNER_TEMP/meboard-offline-kit.tar.gz.sha256"
+
+      - name: Upload offline replay kit
+        uses: actions/upload-artifact@v4
+        with:
+          name: meboard-offline-kit
+          path: |
+            ${{ runner.temp }}/meboard-offline-kit.tar.gz
+            ${{ runner.temp }}/meboard-offline-kit.tar.gz.sha256
+          retention-days: 7
+          if-no-files-found: error
