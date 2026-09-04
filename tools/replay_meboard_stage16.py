@@ -48,6 +48,7 @@ def main() -> None:
     required = [
         ROOT / 'replay_meboard_pipeline.py',
         ROOT / 'verify_eqt_registry_registers.py',
+        ROOT / 'verify_module_registry_subsequence.py',
         ROOT / 'repair_eqt_reused_discriminators.py',
         *(ROOT / name for name in CONTINUATION),
         APKTOOL,
@@ -68,6 +69,7 @@ def main() -> None:
 
     OUTPUT.parent.mkdir(parents=True, exist_ok=True)
     run(sys.executable, ROOT / 'verify_eqt_registry_registers.py')
+    run(sys.executable, ROOT / 'verify_module_registry_subsequence.py')
     run(
         'java', '-jar', APKTOOL, 'b', '--aapt', AAPT2,
         '-f', '-j', '4', '-o', OUTPUT, WORK / 'buildtree',
