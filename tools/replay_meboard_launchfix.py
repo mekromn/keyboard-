@@ -40,6 +40,7 @@ def main() -> None:
         ROOT / 'replay_meboard_stage16.py',
         ROOT / 'remove_signature_whitelist_guard.py',
         ROOT / 'verify_eqt_registry_registers.py',
+        ROOT / 'verify_latinapp_context_register.py',
         APKTOOL,
         AAPT2,
     ]
@@ -50,6 +51,7 @@ def main() -> None:
     run(sys.executable, ROOT / 'replay_meboard_stage16.py')
     run(sys.executable, ROOT / 'remove_signature_whitelist_guard.py')
     run(sys.executable, ROOT / 'verify_eqt_registry_registers.py')
+    run(sys.executable, ROOT / 'verify_latinapp_context_register.py')
     run(
         'java', '-jar', APKTOOL, 'b', '--aapt', AAPT2,
         '-f', '-j', '4', '-o', OUTPUT, WORK / 'buildtree',
