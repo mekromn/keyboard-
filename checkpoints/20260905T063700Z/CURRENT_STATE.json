@@ -1,0 +1,53 @@
+{
+  "schema": 1,
+  "checkpoint_id": "20260905T063700Z",
+  "project": "Meboard",
+  "stage_label": "latinapp-context-verifyerror-fixed-runtime-pending",
+  "source_state": {
+    "repository": "mekromn/keyboard-",
+    "repair_branch": "meboard/fix-latinapp-context-20260905",
+    "commit": "c569ba979d33a89be1f53c44e43b349664bf528c"
+  },
+  "device_evidence": {
+    "device": "Pixel 9 Pro XL",
+    "android": "16 / API 36",
+    "crashing_installed_apk_sha256": "dd8044ae0c365d6e7fbc6a87295cedd6c06bcf87027cdda287b9b9ef8021ffb5",
+    "fatal": "LatinApp.e() VerifyError at 0x627: v7 was Object where Context was required"
+  },
+  "repair": {
+    "summary": "Preserve the shared getApplicationContext()/move-result-object v7 producer while physically deleting the certificate-whitelist scheduler and implementation.",
+    "full_clean_replay": "passed",
+    "full_clean_replay_exit_code": 0,
+    "clean_unsigned_sha256": "d2a9ac5d851b9f3ac08297cca988fc744f3864b3f6d7bd486a24507357deb409",
+    "fixed_signed_apk_sha256": "30e0d61df7f88a06d835f61e5f16ed80b204b366e5d968606df777d3f8acd069",
+    "signer_certificate_sha256": "23e8720f08b5975b28fdda85586ab1e7e8422c64082e6a0e221f657c0b7a4e15",
+    "clean_replay_payload_byte_identical": true
+  },
+  "static_gates": {
+    "latinapp_context_producer_consumer": true,
+    "signature_scheduler_absent": true,
+    "eqt_register_state": true,
+    "module_registry_order_and_constants": true,
+    "retained_factories": 236,
+    "original_factories": 290,
+    "dex_count": 4,
+    "zip_integrity": true,
+    "apk_signature_scheme_v3": true,
+    "zipalign_16k": true,
+    "manifest_activities": 25
+  },
+  "runtime_gate": {
+    "fixed_apk_installed_at_capture": false,
+    "launcher": "pending",
+    "latinime_bind_render_type_switch": "pending",
+    "privacy_final": false
+  },
+  "library": {
+    "folder": "/Meboard/Checkpoints/20260905T063700Z",
+    "public_archive_sha256": "3f4752ac8dc42868badefa9fd36df95040f6e8850f9146a2768511c27efa9264",
+    "private_archive_sha256": "3a53857680ac9fb330254cf4bf9add4235d935a8c8e7b22a12f1621631a855d2",
+    "apk_sha256": "30e0d61df7f88a06d835f61e5f16ed80b204b366e5d968606df777d3f8acd069",
+    "round_trip_byte_identical": true
+  },
+  "next_action": "Install exact fixed APK, verify installed SHA, launch, capture fresh system logcat, then run LatinIME bind/render/type/switch gate."
+}
