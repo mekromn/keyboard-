@@ -41,6 +41,8 @@ def main() -> None:
         ROOT / 'remove_signature_whitelist_guard.py',
         ROOT / 'verify_eqt_registry_registers.py',
         ROOT / 'verify_latinapp_context_register.py',
+        ROOT / 'restore_density_split_resource_ids.py',
+        ROOT / 'verify_density_split_resource_ids.py',
         APKTOOL,
         AAPT2,
     ]
@@ -52,10 +54,13 @@ def main() -> None:
     run(sys.executable, ROOT / 'remove_signature_whitelist_guard.py')
     run(sys.executable, ROOT / 'verify_eqt_registry_registers.py')
     run(sys.executable, ROOT / 'verify_latinapp_context_register.py')
+    run(sys.executable, ROOT / 'restore_density_split_resource_ids.py')
     run(
         'java', '-jar', APKTOOL, 'b', '--aapt', AAPT2,
         '-f', '-j', '4', '-o', OUTPUT, WORK / 'buildtree',
     )
+
+    run(sys.executable, ROOT / 'verify_density_split_resource_ids.py', OUTPUT)
 
     with zipfile.ZipFile(OUTPUT) as archive:
         bad = archive.testzip()
