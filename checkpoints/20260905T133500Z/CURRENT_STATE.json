@@ -1,0 +1,46 @@
+{
+  "schema": 1,
+  "checkpoint_id": "20260905T133500Z",
+  "project": "Meboard",
+  "stage_label": "split-resource-id-reconstruction-fixed-runtime-pending",
+  "device_failure": {
+    "latinime_bound": true,
+    "keyboard_rendered": false,
+    "fatal": "Failed to fetch keyboard for prime when activating; Failed to get identifier from name: 0"
+  },
+  "root_cause": "Density-split resource files were fused without preserving every split public.xml ID, leaving keyboard-definition references null/zero after recompilation.",
+  "repair": {
+    "split_resource_ids_merged": 114,
+    "lost_references_restored": 194,
+    "xml_files_repaired": 48,
+    "compiled_reference_gate": "passed"
+  },
+  "payload_invariants": {
+    "dex_count": 4,
+    "dex_byte_identical_to_previous_ime_starting_build": true,
+    "native_library_count": 16,
+    "native_byte_identical_to_previous_ime_starting_build": true,
+    "only_resources_changed": true
+  },
+  "artifact": {
+    "file": "Meboard-stage16-split-resource-id-fix-replay-signed.apk",
+    "checksum": "See the immutable SHA-256 sidecar in the Library checkpoint",
+    "library_path": "/Meboard/Checkpoints/20260905T133500Z"
+  },
+  "source": {
+    "repair_branch": "meboard/fix-split-resource-ids-20260905",
+    "checkpoint_branch": "meboard/checkpoint-20260905T133500Z",
+    "moving_pointer": "meboard/resume-latest"
+  },
+  "runtime_gate": {
+    "candidate_installed": false,
+    "bind_render_type_switch": "pending",
+    "privacy_final": false
+  },
+  "functionality_contract": {
+    "remove_user_facing_features": false,
+    "preserve_local_ai_and_personalization": true,
+    "resource_fix_changes_privacy_removal_logic": false
+  },
+  "next_action": "Install the exact signed candidate over existing Meboard, verify installed SHA-256, select it in a text field, capture fresh logcat, and require bind/render/type/switch-away/switch-back."
+}
