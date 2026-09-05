@@ -1,0 +1,67 @@
+{
+  "schema": 2,
+  "checkpoint_id": "20260905T135810Z",
+  "project": "Meboard",
+  "stage_label": "density-split-resource-identities-restored-runtime-pending",
+  "source_state": {
+    "repository": "mekromn/keyboard-",
+    "repair_branch": "meboard/fix-density-resource-ids-20260905",
+    "repair_code_commit": "9c4cee466634859758c3af74fe9ae7f523442cc7"
+  },
+  "device_failure_repaired": {
+    "previous_apk_sha256": "30e0d61df7f88a06d835f61e5f16ed80b204b366e5d968606df777d3f8acd069",
+    "fatal": "LatinIME keyboard-definition load failed: IllegalStateException: Failed to get identifier from name: 0"
+  },
+  "repair": {
+    "missing_density_public_ids_restored": 114,
+    "original_nonzero_xml_references_restored": 194,
+    "affected_xml_resources": 48,
+    "remaining_original_nonzero_to_zero_losses": 0
+  },
+  "candidate": {
+    "file": "Meboard-stage16-density-resource-fix-replay-signed.apk",
+    "package": "com.mekromn.meboard",
+    "size": 110304172,
+    "sha256": "913b5e69997541ad6015d80661677f510826cfd63980b85a9178a95b71780342",
+    "signer_certificate_sha256": "23e8720f08b5975b28fdda85586ab1e7e8422c64082e6a0e221f657c0b7a4e15"
+  },
+  "verification": {
+    "clean_replays_from_untouched_source": 2,
+    "committed_script_replay_exit_code": 0,
+    "replay_zip_payload_entries": 9148,
+    "replay_payload_byte_identical_to_promoted_candidate": true,
+    "dex_count": 4,
+    "all_dex_byte_identical_to_previous_candidate": true,
+    "native_library_count": 16,
+    "all_native_libraries_byte_identical_to_previous_candidate": true,
+    "zip_integrity": "passed",
+    "apk_signature_scheme_v3": "passed",
+    "zipalign_16k": "passed",
+    "compiled_density_resource_gate": "passed",
+    "runtime_latinime_gate": "pending",
+    "privacy_final": false
+  },
+  "redundant_storage": {
+    "library_folder": "/Meboard/Checkpoints/20260905T135810Z",
+    "public_archive": {
+      "size": 38213359,
+      "sha256": "54659eadbe8846f9f18c98da1a5b051792e28ed6f870ba20d8a7a89364c154ad",
+      "file_id": "file_00000000d4048230b4f09ee36359af9d"
+    },
+    "private_archive": {
+      "size": 177477723,
+      "sha256": "4f41d00058f5f01c603bc6e70a336da81431116a03d71be73703200edcc6d3b0",
+      "file_id": "file_00000000dca88230b6367e89b2fbb255",
+      "must_not_publish": true
+    },
+    "apk_file_id": "file_00000000e1848230a3e2b72356032e83",
+    "library_round_trip_byte_identical": true,
+    "library_round_trip_zip_crc": "passed"
+  },
+  "scope": {
+    "user_facing_feature_removed_by_this_fix": false,
+    "dex_or_native_code_changed_by_this_fix": false,
+    "privacy_removal_restored_by_this_fix": false
+  },
+  "next_action": "Install the exact candidate, verify installed SHA-256, invoke LatinIME, capture fresh logcat, and require render/type/switch-away/switch-back survival before deeper privacy work."
+}
