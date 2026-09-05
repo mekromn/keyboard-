@@ -1,0 +1,93 @@
+{
+  "candidate": {
+    "bad_member": null,
+    "dex_files": [
+      "classes.dex",
+      "classes2.dex",
+      "classes3.dex",
+      "classes4.dex"
+    ],
+    "four_dex": true,
+    "has_manifest": true,
+    "native_library_count": 16,
+    "path": "/mnt/data/Meboard-stage16-launchfix-replay-signed.apk",
+    "sha256": "dd8044ae0c365d6e7fbc6a87295cedd6c06bcf87027cdda287b9b9ef8021ffb5",
+    "size_bytes": 110287788
+  },
+  "canonical_hashes_rechecked": true,
+  "checkpoint_id": "20260905T012006Z",
+  "created_utc": "2026-09-05T01:21:41Z",
+  "library": {
+    "candidate": {
+      "file_id": "file_000000001c44823084480848acd2811c",
+      "library_file_id": "libfile_07d25427f33881919b61f65e0e1f0ce5",
+      "path": "/Meboard/Checkpoints/20260905T012006Z/Meboard-stage16-launchfix-replay-signed.apk"
+    },
+    "folder": "/Meboard/Checkpoints/20260905T012006Z",
+    "private": {
+      "file_id": "file_00000000044882308d684b933aeb5cc2",
+      "library_file_id": "libfile_144bf1a64e8481918cb36fe48d108954",
+      "path": "/Meboard/Checkpoints/20260905T012006Z/Meboard-Checkpoint-20260905T012006Z-PRIVATE.zip"
+    },
+    "public": {
+      "file_id": "file_00000000bbf48230a36989b23579eb0f",
+      "library_file_id": "libfile_f0a34a7cec4c819182e76031759cf1f8",
+      "path": "/Meboard/Checkpoints/20260905T012006Z/Meboard-Checkpoint-20260905T012006Z-PUBLIC.zip"
+    },
+    "result_json": {
+      "library_file_id": "libfile_469f54d85e0c819182730f9adc8ab5ba",
+      "path": "/Meboard/Checkpoints/20260905T012006Z/Meboard-Checkpoint-20260905T012006Z-RESULT.json"
+    },
+    "result_md": {
+      "library_file_id": "libfile_b111cfa3eccc81918f215b11bbd772b7",
+      "path": "/Meboard/Checkpoints/20260905T012006Z/Meboard-Checkpoint-20260905T012006Z-RESULT.md"
+    },
+    "resume_pointer": {
+      "library_file_id": "libfile_db3cfea204a88191851f881adfc40b69",
+      "path": "/Meboard/Checkpoints/20260905T012006Z/Meboard-RESUME-NOW-20260905T012006Z.md"
+    },
+    "verification_json": {
+      "library_file_id": "libfile_a4fab872255c81919ba2e5d47c9350fe",
+      "path": "/Meboard/Checkpoints/20260905T012006Z/Meboard-stage16-launchfix-replay-verification.json"
+    },
+    "verification_md": {
+      "library_file_id": "libfile_2db35744d5c48191a6afee2050c4d275",
+      "path": "/Meboard/Checkpoints/20260905T012006Z/Meboard-stage16-launchfix-replay-verification.md"
+    }
+  },
+  "library_round_trip": {
+    "byte_identical_cmp": true,
+    "candidate_sha256": "dd8044ae0c365d6e7fbc6a87295cedd6c06bcf87027cdda287b9b9ef8021ffb5",
+    "materialized": true,
+    "private_sha256": "d18a97cea09dc8559289be6087842eb8ada328e0cabfc0e4f7a3a6de69903314",
+    "public_sha256": "b2c33a0a9f0fb82d61f9698cbe6cf1156c1c186501d465a3b742a2552a903347",
+    "verified_utc": "2026-09-05T01:23:19Z",
+    "zip_crc_private": true,
+    "zip_crc_public": true
+  },
+  "privacy_final": false,
+  "private": {
+    "member_count": 7,
+    "member_hashes_verified": 6,
+    "path": "/mnt/data/Meboard-Checkpoint-20260905T012006Z-PRIVATE.zip",
+    "sha256": "d18a97cea09dc8559289be6087842eb8ada328e0cabfc0e4f7a3a6de69903314",
+    "size_bytes": 252271747,
+    "zip_integrity": "passed"
+  },
+  "public": {
+    "member_count": 103,
+    "member_hashes_verified": 102,
+    "path": "/mnt/data/Meboard-Checkpoint-20260905T012006Z-PUBLIC.zip",
+    "privacy_boundary": {
+      "forbidden_files": [],
+      "passed": true
+    },
+    "sha256": "b2c33a0a9f0fb82d61f9698cbe6cf1156c1c186501d465a3b742a2552a903347",
+    "size_bytes": 75812706,
+    "zip_integrity": "passed"
+  },
+  "public_contains_private_material": false,
+  "runtime_acceptance": "not_run",
+  "schema": 2,
+  "status": "passed"
+}
