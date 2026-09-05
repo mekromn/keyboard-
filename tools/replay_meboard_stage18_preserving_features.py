@@ -29,7 +29,7 @@ HERE = Path(__file__).resolve().parent
 WORK = Path('/mnt/data/meboard_work')
 APKTOOL = Path('/mnt/data/meboard_tools/android/apktool/apktool.jar')
 AAPT2 = Path('/mnt/data/meboard_tools/android/build-tools/aapt2')
-OUTPUT = WORK / 'checkpoints/Meboard-stage18-safe-unsigned.apk'
+OUTPUT = WORK / 'checkpoints/Meboard-stage18-mozc-reporting-sinks-unsigned.apk'
 
 
 def run(*args: str | Path) -> None:
@@ -60,10 +60,12 @@ def main() -> None:
     required = (
         'replay_meboard_launchfix.py',
         'restore_retained_manifest_entrypoints.py',
-        'remove_mozc_telemetry_complete.py',
+        'remove_mozc_reporting_sinks.py',
         'verify_eqt_registry_registers.py',
         'verify_latinapp_context_register.py',
         'verify_density_split_resource_ids.py',
+        'verify_stage18_mozc_sink_preservation.py',
+        'verify_meboard_privacy_current.py',
     )
     for name in required:
         path = HERE / name
@@ -76,7 +78,7 @@ def main() -> None:
     run(sys.executable, HERE / 'replay_meboard_launchfix.py')
     before = classes()
     run(sys.executable, HERE / 'restore_retained_manifest_entrypoints.py')
-    run(sys.executable, HERE / 'remove_mozc_telemetry_complete.py')
+    run(sys.executable, HERE / 'remove_mozc_reporting_sinks.py')
     after = classes()
     deleted = sorted(before - after)
     if not 5 <= len(deleted) <= 24:
@@ -84,7 +86,6 @@ def main() -> None:
             f'refusing unexpected Mozc reporting delta: {len(deleted)} classes: {deleted}'
         )
 
-    # No retained class may still reference a deleted descriptor.
     dangling: list[tuple[str, str]] = []
     for path in (WORK / 'buildtree').glob('smali*/**/*.smali'):
         text = path.read_text(errors='ignore')
@@ -96,6 +97,8 @@ def main() -> None:
 
     run(sys.executable, HERE / 'verify_eqt_registry_registers.py')
     run(sys.executable, HERE / 'verify_latinapp_context_register.py')
+    run(sys.executable, HERE / 'verify_stage18_mozc_sink_preservation.py')
+    run(sys.executable, HERE / 'verify_meboard_privacy_current.py', WORK / 'buildtree')
     run(
         'java', '-jar', APKTOOL, 'b', '--aapt', AAPT2,
         '-f', '-j', '4', '-o', OUTPUT, WORK / 'buildtree',
@@ -114,7 +117,7 @@ def main() -> None:
         if dex != expected:
             raise SystemExit(f'unexpected DEX set: {dex}')
 
-    print('Stage-18 safe reporting build complete')
+    print('Stage-18 Mozc reporting-sink build complete')
     print('Deleted Mozc reporting classes:', deleted)
     print('Output:', OUTPUT)
     print('SHA-256:', sha256(OUTPUT))
