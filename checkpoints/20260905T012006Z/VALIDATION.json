@@ -1,0 +1,197 @@
+{
+  "artifacts": {
+    "previous_signed_candidate": {
+      "bad_member": null,
+      "dex_files": [
+        "classes.dex",
+        "classes2.dex",
+        "classes3.dex",
+        "classes4.dex"
+      ],
+      "entry_count": 9148,
+      "native_library_count": 16,
+      "path": "/mnt/data/meboard-work/Meboard-stage16-signature-guard-fix.apk",
+      "sha256": "5a47c72c6a613c50b9259d3a25d2d38d84bd26ad1f3433c6afc902ff72caa432",
+      "size_bytes": 110291391,
+      "zip_integrity": true
+    },
+    "signed_replay": {
+      "bad_member": null,
+      "dex_files": [
+        "classes.dex",
+        "classes2.dex",
+        "classes3.dex",
+        "classes4.dex"
+      ],
+      "entry_count": 9148,
+      "native_library_count": 16,
+      "path": "/mnt/data/Meboard-stage16-launchfix-replay-signed.apk",
+      "sha256": "dd8044ae0c365d6e7fbc6a87295cedd6c06bcf87027cdda287b9b9ef8021ffb5",
+      "size_bytes": 110287788,
+      "zip_integrity": true
+    },
+    "source": {
+      "path": "/mnt/data/meboard-work/Gboard_175940518_18.0.3.954559732-release-arm64-v8a.aspk",
+      "sha256": "665e4fb3c04874037c1b6477ef734fb38934e300a4f4197978dd6d4c72d28a10",
+      "size_bytes": 66159047
+    },
+    "unsigned_replay": {
+      "bad_member": null,
+      "dex_files": [
+        "classes.dex",
+        "classes2.dex",
+        "classes3.dex",
+        "classes4.dex"
+      ],
+      "entry_count": 9148,
+      "native_library_count": 16,
+      "path": "/mnt/data/meboard_work/checkpoints/Meboard-launchfix-unsigned.apk",
+      "sha256": "30fef14b7d0de57da869049970421021a10710c5337285ec873db5d5c058699c",
+      "size_bytes": 110106982,
+      "zip_integrity": true
+    }
+  },
+  "generated_utc": "2026-09-05T01:17:51Z",
+  "privacy_completion": {
+    "complete": false,
+    "fast_verifier_passed": false,
+    "note": "Residual library/reporting implementations still require reachability and branch-level removal; this candidate is not labeled privacy-final.",
+    "residual_fatal_categories": {
+      "brella_federated_service": 190,
+      "clearcut_transport": 11,
+      "primes_runtime": 59,
+      "remote_phenotype_registration": 2
+    }
+  },
+  "retained_feature_surface": {
+    "class_graph": {
+      "added_classes": 0,
+      "current_classes": 21776,
+      "original_classes": 22050,
+      "physically_removed_classes": 274,
+      "surviving_references_to_removed_classes": 0
+    },
+    "critical_input_method_resources": [
+      {
+        "current_sha256": "a90e9f33053c8ec80cb4a118acde0f3949537669390958c136ef1983a3a46bee",
+        "identical": true,
+        "original_sha256": "a90e9f33053c8ec80cb4a118acde0f3949537669390958c136ef1983a3a46bee",
+        "path": "res/xml/method.xml"
+      },
+      {
+        "current_sha256": "79175d5eca5c5d282866c4ac77d28c8932f256aa3351269bb39fa3e5d6fcc04f",
+        "identical": true,
+        "original_sha256": "79175d5eca5c5d282866c4ac77d28c8932f256aa3351269bb39fa3e5d6fcc04f",
+        "path": "res/xml/setting_japanese_softwarekeyboard.xml"
+      },
+      {
+        "current_sha256": "3df0f302596f3ffabc125e33e66fc02bb543d6ad434dd565b2d1935e23f963fd",
+        "identical": true,
+        "original_sha256": "3df0f302596f3ffabc125e33e66fc02bb543d6ad434dd565b2d1935e23f963fd",
+        "path": "res/xml/setting_physical_keyboard.xml"
+      }
+    ],
+    "manifest": {
+      "diff": {
+        "activity": {
+          "added": [],
+          "common_count": 25,
+          "new_count": 25,
+          "old_count": 25,
+          "removed": []
+        },
+        "activity-alias": {
+          "added": [],
+          "common_count": 0,
+          "new_count": 0,
+          "old_count": 0,
+          "removed": []
+        },
+        "permissions": {
+          "added": [],
+          "new_count": 24,
+          "old_count": 25,
+          "removed": [
+            "android.permission.GET_ACCOUNTS"
+          ]
+        },
+        "provider": {
+          "added": [],
+          "common_count": 4,
+          "new_count": 4,
+          "old_count": 5,
+          "removed": [
+            "com.google.android.apps.inputmethod.libs.keyhound.InputActionFileProvider"
+          ]
+        },
+        "receiver": {
+          "added": [],
+          "common_count": 7,
+          "new_count": 7,
+          "old_count": 8,
+          "removed": [
+            "com.google.android.libraries.inputmethod.accounts.checker.AccountsCapabilitiesChangedReceiver"
+          ]
+        },
+        "service": {
+          "added": [],
+          "common_count": 12,
+          "new_count": 12,
+          "old_count": 13,
+          "removed": [
+            "android.net.http.MetaDataHolder"
+          ]
+        }
+      },
+      "passed": true
+    },
+    "module_registry": {
+      "original_factories": 290,
+      "passed": true,
+      "retained_factories": 236,
+      "rule": "exact ordered subsequence with constructor constants preserved"
+    },
+    "native_libraries": {
+      "byte_mismatches": [],
+      "current_count": 16,
+      "explanation": {
+        "arm64-v8a/libnative_crash_handler_jni.so": "automatic native crash reporting cluster",
+        "arm64-v8a/libtensorflow_jni.so": "Brella/federated-training split"
+      },
+      "intentionally_absent": [
+        "arm64-v8a/libnative_crash_handler_jni.so",
+        "arm64-v8a/libtensorflow_jni.so"
+      ],
+      "passed": true,
+      "source_unique": 18
+    },
+    "passed_static_gate": true,
+    "previous_candidate_comparison": {
+      "aapt_badging_identical": true,
+      "only_intended_registry_constants_added": true,
+      "resource_runtime_semantics_equal": true,
+      "smali_files_different": [
+        "eqt.smali"
+      ]
+    }
+  },
+  "runtime_acceptance": {
+    "not_run": true,
+    "note": "Static preservation passed; runtime behavior cannot be claimed without a device test.",
+    "passed": false,
+    "required": [
+      "LatinIME binds",
+      "keyboard renders",
+      "typing remains alive",
+      "switch away survives",
+      "switch back survives",
+      "user-facing regression sweep"
+    ]
+  },
+  "scope": "APKbox-free static replay and retained-feature acceptance; no device/runtime claim",
+  "signing": {
+    "apk_signature_scheme_v3_verified": true,
+    "certificate_sha256": "23e8720f08b5975b28fdda85586ab1e7e8422c64082e6a0e221f657c0b7a4e15",
+    "zipalign_16k_verified": true
+  }
+}
