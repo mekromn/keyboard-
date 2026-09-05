@@ -6,7 +6,9 @@ LatinApp schedules a shared Runnable that compares the installed package signer
 against hard-coded Google certificate digests and throws IllegalStateException
 for every legitimate independently signed fork. This pass removes the producer,
 the shared synthetic branch, the comparator, and the embedded whitelist bytes.
-Android Package Manager signature/update enforcement remains untouched.
+The application-context producer is retained because later startup code reuses
+that register as a real ``Context``. Android Package Manager signature/update
+enforcement remains untouched.
 """
 from __future__ import annotations
 
@@ -63,9 +65,52 @@ for required in (
 ):
     if required not in block:
         raise SystemExit(f'LatinApp signature-check block missing {required}')
-del lines[start : end + 1]
-latin.write_text('\n'.join(lines) + '\n')
-print('LatinApp: removed signature-whitelist Runnable scheduling')
+
+# The guard's scheduling block also initializes v7 with the application Context.
+# A later retained startup path calls qhy.I(v7). Deleting that shared producer
+# leaves v7 holding an unrelated Object and ART rejects LatinApp.e() before
+# Application.onCreate. Preserve only the Context producer; delete the executor,
+# Runnable construction, discriminator, and scheduling call.
+move_result = next(
+    (
+        i
+        for i in range(start + 1, mid)
+        if lines[i].strip() == 'move-result-object v7'
+    ),
+    None,
+)
+if move_result is None:
+    raise SystemExit('LatinApp shared application-context move-result not found')
+producer = '\n'.join(lines[start : move_result + 1])
+if (
+    'LatinApp;->getApplicationContext()Landroid/content/Context;' not in producer
+    or 'move-result-object v7' not in producer
+):
+    raise SystemExit('LatinApp application-context producer is not the expected sequence')
+del lines[move_result + 1 : end + 1]
+latin_text = '\n'.join(lines) + '\n'
+producer_pattern = re.compile(
+    r'invoke-virtual \{v0\}, '
+    r'Lcom/google/android/apps/inputmethod/latin/LatinApp;'
+    r'->getApplicationContext\(\)Landroid/content/Context;'
+    r'\s+move-result-object v7'
+)
+if len(producer_pattern.findall(latin_text)) != 1:
+    raise SystemExit('LatinApp must retain exactly one shared v7 Context producer')
+for forbidden in (
+    'const/16 v3, 0x8',
+    'new-instance v2, Lmm;',
+    'invoke-direct {v2, v7, v3}, Lmm;-><init>(Ljava/lang/Object;I)V',
+):
+    if forbidden in latin_text:
+        raise SystemExit(f'LatinApp signature scheduling residue remains: {forbidden}')
+consumer = 'invoke-static {v7}, Lqhy;->I(Landroid/content/Context;)Lqhy;'
+producer_match = producer_pattern.search(latin_text)
+consumer_pos = latin_text.find(consumer)
+if producer_match is None or consumer_pos < producer_match.end():
+    raise SystemExit('LatinApp retained Context consumer is not dominated by its producer')
+latin.write_text(latin_text)
+print('LatinApp: removed signature-whitelist scheduling while preserving shared Context producer')
 
 # Remove discriminator-8 code from the shared Runnable. Its now-impossible
 # switch slot targets the common return label, leaving no dead verifier branch.
