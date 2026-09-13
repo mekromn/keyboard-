@@ -1,0 +1,10 @@
+--- a/AndroidManifest.xml
++++ b/AndroidManifest.xml
+@@ -40,4 +40,7 @@
+             <action android:name="android.view.InputMethod"/>
+         </intent>
++        <intent>
++            <action android:name="android.speech.RecognitionService"/>
++        </intent>
+         <package android:name="com.google.android.apps.village.boond"/>
+         <intent>
