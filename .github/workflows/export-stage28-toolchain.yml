@@ -1,0 +1,33 @@
+name: Export Stage 28 toolchain
+on:
+  push:
+    branches:
+      - meboard/stage28-privacy-controls-test-20260913
+    paths:
+      - '.github/workflows/export-stage28-toolchain.yml'
+permissions:
+  contents: read
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fetch toolchain
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p out/build-tools/lib
+          curl --fail --location --retry 3 \
+            --output out/apktool.jar \
+            https://github.com/iBotPeaches/Apktool/releases/download/v3.0.3/apktool_3.0.3.jar
+          BUILD_TOOLS="$(find "$ANDROID_SDK_ROOT/build-tools" -mindepth 1 -maxdepth 1 -type d | sort -V | tail -n 1)"
+          test -n "$BUILD_TOOLS"
+          cp "$BUILD_TOOLS/lib/apksigner.jar" out/build-tools/lib/apksigner.jar
+          cp "$BUILD_TOOLS/aapt2" out/build-tools/aapt2
+          cp "$BUILD_TOOLS/zipalign" out/build-tools/zipalign
+          sha256sum out/apktool.jar out/build-tools/lib/apksigner.jar > out/SHA256SUMS.txt
+      - name: Upload
+        uses: actions/upload-artifact@v4
+        with:
+          name: stage28-toolchain
+          path: out
+          retention-days: 2
