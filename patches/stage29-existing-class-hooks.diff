@@ -1,0 +1,24 @@
+# Minimal Stage28b -> Stage29 existing-class edits (zero context)
+--- a/smali/com/google/android/libraries/inputmethod/widgets/SoftKeyboardView.smali
++++ b/smali/com/google/android/libraries/inputmethod/widgets/SoftKeyboardView.smali
+@@ -4238,0 +4239,7 @@
++    invoke-static {p1}, Lcom/mekromn/meboard/VoiceProviderChooser;->maybeHandle(Landroid/view/View;)Z
++    move-result v0
++    if-eqz v0, :meboard_original_long_press
++    const/4 v0, 0x1
++    return v0
++
++    :meboard_original_long_press
+--- a/smali/mic.smali
++++ b/smali/mic.smali
+@@ -1632,0 +1633,5 @@
++    sget-object v0, Lmif;->i:Lmif;
++    if-ne p1, v0, :meboard_voice_long_press_done
++    if-eqz p2, :meboard_voice_long_press_done
++    invoke-static {p2}, Lcom/mekromn/meboard/VoiceProviderChooser;->installOnVoiceAccessPoint(Landroid/view/View;)V
++    :meboard_voice_long_press_done
+--- a/smali/oup.smali
++++ b/smali/oup.smali
+@@ -13933,0 +13934,2 @@
++
++    invoke-static {p0, v5}, Lcom/mekromn/meboard/MeboardGlass;->apply(Landroid/inputmethodservice/InputMethodService;Landroid/view/View;)V
