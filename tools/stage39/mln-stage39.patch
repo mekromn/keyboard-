@@ -1,0 +1,112 @@
+--- a/smali/mln.smali
++++ b/smali/mln.smali
+@@ -7576,7 +7576,7 @@
+ 
+     .line 278
+     .line 279
+-    if-eqz p0, :cond_11
++    if-eqz p0, :cond_13
+@@ -7588,7 +7588,7 @@
+-    if-eqz p0, :cond_11
++    if-eqz p0, :cond_13
+@@ -7600,7 +7600,7 @@
+-    if-eqz p1, :cond_11
++    if-eqz p1, :cond_13
+@@ -7669,7 +7669,7 @@
+-    if-eqz p0, :cond_11
++    if-eqz p0, :cond_13
+@@ -7736,7 +7736,7 @@
+-    if-eqz p0, :cond_11
++    if-eqz p0, :cond_13
+@@ -7749,27 +7749,56 @@
+     .line 364
+     :pswitch_5
++    move-object v2, p0
++
+     iget-object p0, v0, Lpnu;->e:Ljava/lang/Object;
+ 
++    instance-of p1, p0, Lcom/mekromn/meboard/VoiceProviderActionRunnable;
++
++    if-eqz p1, :cond_10
++
++    iget-object p1, v2, Lmln;->j:[Landroid/view/View;
++
++    sget-object v3, Lppe;->a:Lppe;
++
++    invoke-virtual {v3}, Lppe;->ordinal()I
++
++    move-result v3
++
++    aget-object p1, p1, v3
++
++    if-eqz p1, :cond_10
++
++    const v3, 0x7f0b2b26
++
++    invoke-virtual {p1, v3}, Landroid/view/View;->findViewById(I)Landroid/view/View;
++
++    move-result-object v3
++
++    if-eqz v3, :cond_f
++
++    move-object p1, v3
++
++    :cond_f
++    const/4 v3, 0x0
++
++    invoke-virtual {p1, v3}, Landroid/view/View;->performHapticFeedback(I)Z
++
++    invoke-static {p1}, Lcom/mekromn/meboard/VoiceProviderChooser;->showChooser(Landroid/view/View;)Z
++
++    move-result p1
++
++    if-nez p1, :cond_13
++
++    :cond_10
+     instance-of p1, p0, Ljava/lang/Runnable;
+ 
+-    if-eqz p1, :cond_11
++    if-eqz p1, :cond_13
+ 
+     check-cast p0, Ljava/lang/Runnable;
+ 
+     invoke-interface {p0}, Ljava/lang/Runnable;->run()V
+ 
+     goto :goto_5
+@@ -7785,7 +7814,7 @@
+-    if-eqz p0, :cond_f
++    if-eqz p0, :cond_11
+@@ -7797,11 +7826,11 @@
+-    if-eqz p0, :cond_10
++    if-eqz p0, :cond_12
+-    :cond_f
++    :cond_11
+@@ -7823,7 +7852,7 @@
+-    :cond_10
++    :cond_12
+@@ -7867,7 +7896,7 @@
+-    :cond_11
++    :cond_13
+@@ -7879,7 +7908,7 @@
+-    if-nez p0, :cond_13
++    if-nez p0, :cond_15
+@@ -7887,7 +7916,7 @@
+-    if-eq p1, p0, :cond_12
++    if-eq p1, p0, :cond_14
+@@ -7895,7 +7924,7 @@
+-    if-eq p1, p0, :cond_12
++    if-eq p1, p0, :cond_14
+@@ -7903,7 +7932,7 @@
+-    if-eq p1, p0, :cond_12
++    if-eq p1, p0, :cond_14
+@@ -7911,7 +7940,7 @@
+-    if-eq p1, p0, :cond_12
++    if-eq p1, p0, :cond_14
+@@ -7919,14 +7948,14 @@
+-    if-eq p1, p0, :cond_12
++    if-eq p1, p0, :cond_14
+-    :cond_12
++    :cond_14
+@@ -7939,7 +7968,7 @@
+-    :cond_13
++    :cond_15
