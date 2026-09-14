@@ -1,0 +1,5 @@
+--- VoiceProviderRelayActivity-stage41.smali
++++ VoiceProviderRelayActivity-stage42.smali
+@@
+-    const-string v1, "org.futo.voiceinput"
++    const-string v1, "org.futo.voiceinput.moonshine"
