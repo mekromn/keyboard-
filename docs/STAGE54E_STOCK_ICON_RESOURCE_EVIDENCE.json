@@ -1,0 +1,39 @@
+{
+  "restored_stock_style": "0x7f15043d",
+  "restored_mappings": {
+    "0x7f040195": "0x7f0805a5",
+    "0x7f0401a1": "0x7f0805eb",
+    "0x7f0401a3": "0x7f0805f4",
+    "0x7f0401a4": "0x7f0805f6",
+    "0x7f0401b0": "0x7f0805fb",
+    "0x7f0401b1": "0x7f0805fc",
+    "0x7f0401b2": "0x7f0805fd",
+    "0x7f0401b5": "0x7f080600",
+    "0x7f0401bc": "0x7f08056e",
+    "0x7f0401bd": "0x7f08056f"
+  },
+  "shift_asset_evidence": {
+    "0x7f0805fb": {
+      "stock_entry": "res/Myo.webp",
+      "meboard_entry": "res/drawable-xxhdpi-v4/APKTOOL_RENAMED_0x7f0805fb.webp",
+      "byte_identical": true,
+      "sha256": "a7354fa3076545283d64ad48b5058b30f81b36ff5a6c7503aba9aa586f1cfca5",
+      "size": 384
+    },
+    "0x7f0805fc": {
+      "stock_entry": "res/heC.webp",
+      "meboard_entry": "res/drawable-xxhdpi-v4/APKTOOL_RENAMED_0x7f0805fc.webp",
+      "byte_identical": true,
+      "sha256": "331cf4f826aa174f3d4781923e21e6c7a15c953d8b7159516fc09351111a063a",
+      "size": 562
+    },
+    "0x7f0805fd": {
+      "stock_entry": "res/wwa.webp",
+      "meboard_entry": "res/drawable-xxhdpi-v4/APKTOOL_RENAMED_0x7f0805fd.webp",
+      "byte_identical": true,
+      "sha256": "77751f6e93bdcbec69ef04e1d5b26c4e756c5637d47de70b72e28985f10c9cae",
+      "size": 336
+    }
+  },
+  "emoji_resource_note": "0x7f0805a2 already resolved in Meboard to 0x7f0804c4 before Stage54e; it was not one of the lost @null theme mappings."
+}
