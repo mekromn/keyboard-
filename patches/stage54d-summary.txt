@@ -1,0 +1,1 @@
+Stage54d: true native incognito contract + stock header incognito status icon + native Shift/Emoji vectors, cumulative from user-confirmed Stage54c. Signed APK SHA-256: dad5cb2814d8bc6fc2e1cb43d50dc11af11523e6bb17fdb718fdee16456cc57d
