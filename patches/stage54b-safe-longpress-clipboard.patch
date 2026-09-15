@@ -1,0 +1,540 @@
+--- stage53/smali_classes2/pbv.smali
++++ stage54b/smali_classes2/pbv.smali
+@@ -36,7 +36,7 @@
+ 
+ # virtual methods
+ .method public final run()V
+-    .locals 9
++    .locals 11
+@@ -107,6 +107,51 @@
+     .line 32
+     check-cast v1, Lpvi;
++
++    # Meboard Stage54b: handle custom long-press gestures only when the
++    # stock long-press runnable actually fires. Nothing here runs while
++    # the keyboard definition/view hierarchy is being built.
++    iget-object v9, v1, Lpvi;->m:Lcom/google/android/libraries/inputmethod/widgets/SoftKeyView;
++    if-eqz v9, :meboard_check_space
++    invoke-virtual {v9}, Landroid/view/View;->getId()I
++    move-result v9
++    const v10, 0x7f0b053e
++    if-ne v9, v10, :meboard_check_space
++    iget-object v9, v1, Lpvi;->r:Lpvj;
++    check-cast v9, Lpvf;
++    iget-object v9, v9, Lpvf;->b:Landroid/content/Context;
++    invoke-static {v9}, Lcom/mekromn/meboard/IncognitoToggleAction;->toggle(Landroid/content/Context;)Z
++    move-result v9
++    if-eqz v9, :meboard_longpress_normal
++    invoke-virtual {v1}, Lpvi;->C()V
++    return-void
++
++    :meboard_check_space
++    invoke-virtual {v1}, Lpvi;->m()Lcom/google/android/libraries/inputmethod/metadata/SoftKeyDef;
++    move-result-object v9
++    if-eqz v9, :meboard_longpress_normal
++    sget-object v10, Lpmy;->a:Lpmy;
++    invoke-virtual {v9, v10}, Lcom/google/android/libraries/inputmethod/metadata/SoftKeyDef;->h(Lpmy;)Lcom/google/android/libraries/inputmethod/metadata/ActionDef;
++    move-result-object v9
++    if-eqz v9, :meboard_longpress_normal
++    invoke-virtual {v9}, Lcom/google/android/libraries/inputmethod/metadata/ActionDef;->b()Lpnu;
++    move-result-object v9
++    if-eqz v9, :meboard_longpress_normal
++    iget v9, v9, Lpnu;->c:I
++    const/16 v10, 0x3e
++    if-ne v9, v10, :meboard_longpress_normal
++    iget-object v9, v1, Lpvi;->r:Lpvj;
++    check-cast v9, Lpvf;
++    iget-object v9, v9, Lpvf;->b:Landroid/content/Context;
++    invoke-static {v9}, Lcom/mekromn/meboard/SpacebarSelectionAction;->handle(Landroid/content/Context;)Z
++    move-result v9
++    if-eqz v9, :meboard_longpress_normal
++    invoke-virtual {v1}, Lpvi;->C()V
++    return-void
++
++    :meboard_longpress_normal
+     .line 33
+     .line 34
+     invoke-virtual {v1, v0}, Lpvi;->k(Lpmy;)Lcom/google/android/libraries/inputmethod/metadata/ActionDef;
+--- stage53/smali_classes2/fjo.smali
++++ stage54b/smali_classes2/fjo.smali
+@@ -50,158 +50,9 @@
+ .end method
+ 
+ .method public static a(Landroid/content/Context;)J
+-    .locals 10
+-
+-    .line 1
+-    sget-object v0, Lfkz;->j:Lnxp;
+-
+-    .line 2
+-    .line 3
+-    invoke-interface {v0}, Lnxp;->g()Ljava/lang/Object;
+-
+-    .line 4
+-    .line 5
+-    .line 6
+-    move-result-object v0
+-
+-    .line 7
+-    check-cast v0, Ljava/lang/Boolean;
+-
+-    .line 8
+-    .line 9
+-    invoke-virtual {v0}, Ljava/lang/Boolean;->booleanValue()Z
+-
+-    .line 10
+-    .line 11
+-    .line 12
+-    move-result v0
+-
+-    .line 13
+-    if-eqz v0, :cond_0
+-
+-    .line 14
+-    .line 15
+-    invoke-static {p0}, Lqhy;->I(Landroid/content/Context;)Lqhy;
+-
+-    .line 16
+-    .line 17
+-    .line 18
+-    move-result-object p0
+-
+-    .line 19
+-    const v0, 0x7f1409cc
+-
+-    .line 20
+-    .line 21
+-    .line 22
+-    const-string v1, "1"
+-
+-    .line 23
+-    .line 24
+-    invoke-virtual {p0, v0, v1}, Lcdl;->o(ILjava/lang/String;)Ljava/lang/String;
+-
+-    .line 25
+-    .line 26
+-    .line 27
+-    move-result-object p0
+-
+-    .line 28
+-    sget-object v0, Lfjo;->b:Lj$/time/Duration;
+-
+-    .line 29
+-    .line 30
+-    invoke-virtual {v0}, Lj$/time/Duration;->toHours()J
+-
+-    .line 31
+-    .line 32
+-    .line 33
+-    move-result-wide v1
+-
+-    .line 34
+-    :try_start_0
+-    invoke-static {p0}, Ljava/lang/Long;->parseLong(Ljava/lang/String;)J
+-
+-    .line 35
+-    .line 36
+-    .line 37
+-    move-result-wide v1
+-    :try_end_0
+-    .catch Ljava/lang/NumberFormatException; {:try_start_0 .. :try_end_0} :catch_0
+-
+-    .line 38
+-    goto :goto_0
+-
+-    .line 39
+-    :catch_0
+-    move-exception v0
+-
+-    .line 40
+-    move-object v9, v0
+-
+-    .line 41
+-    sget-object p0, Lfjo;->a:Lwef;
+-
+-    .line 42
+-    .line 43
+-    invoke-virtual {p0}, Lwdv;->d()Lwet;
+-
+-    .line 44
+-    .line 45
+-    .line 46
+-    move-result-object v3
+-
+-    .line 47
+-    const/16 v7, 0x32
+-
+-    .line 48
+-    .line 49
+-    const-string v8, "ClipboardContentProviderUtils.java"
+-
+-    .line 50
+-    .line 51
+-    const-string v4, "Failed to parse retention hours"
+-
+-    .line 52
+-    .line 53
+-    const-string v5, "com/google/android/apps/inputmethod/libs/clipboard/ClipboardContentProviderUtils"
+-
+-    .line 54
+-    .line 55
+-    const-string v6, "getUnpinnedItemTimeLimitInMilliSeconds"
+-
+-    .line 56
+-    .line 57
+-    invoke-static/range {v3 .. v9}, La;->bU(Lwet;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;CLjava/lang/String;Ljava/lang/Throwable;)V
+-
+-    .line 58
+-    .line 59
+-    .line 60
+-    :goto_0
+-    invoke-static {v1, v2}, Lj$/time/Duration;->ofHours(J)Lj$/time/Duration;
+-
+-    .line 61
+-    .line 62
+-    .line 63
+-    move-result-object p0
+-
+-    .line 64
+-    invoke-virtual {p0}, Lj$/time/Duration;->toMillis()J
+-
+-    .line 65
+-    .line 66
+-    .line 67
++    .locals 2
++    invoke-static {p0}, Lcom/mekromn/meboard/ClipboardRetentionConfig;->getMillis(Landroid/content/Context;)J
+     move-result-wide v0
+-
+-    .line 68
+-    return-wide v0
+-
+-    .line 69
+-    :cond_0
+-    const-wide/32 v0, 0x36ee80
+-
+-    .line 70
+-    .line 71
+-    .line 72
+     return-wide v0
+ .end method
+--- stage53/smali_classes2/com/mekromn/meboard/MeboardTestPreference.smali
++++ stage54b/smali_classes2/com/mekromn/meboard/MeboardTestPreference.smali
+@@ -52,5 +52,8 @@
+     invoke-virtual {v0, v3}, Landroidx/preference/PreferenceGroup;->an(Landroidx/preference/Preference;)V
+ 
+     :cond_0
++    invoke-static {p0}, Lcom/mekromn/meboard/ClipboardTimeoutPreference;->add(Lcom/google/android/libraries/inputmethod/preferencewidgets/PreferenceHeaderFragment;)V
++
+     return-void
+ .end method
+--- /dev/null
++++ stage54b/smali_classes2/com/mekromn/meboard/ClipboardRetentionConfig.smali
+@@ -0,0 +1,58 @@
++.class public final Lcom/mekromn/meboard/ClipboardRetentionConfig;
++.super Ljava/lang/Object;
++.source "Meboard"
++
++.method private constructor <init>()V
++    .locals 0
++    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
++    return-void
++.end method
++
++.method public static getHours(Landroid/content/Context;)I
++    .locals 5
++    :try_start_0
++    invoke-virtual {p0}, Landroid/content/Context;->getPackageName()Ljava/lang/String;
++    move-result-object v0
++    const-string v1, "_preferences"
++    invoke-virtual {v0, v1}, Ljava/lang/String;->concat(Ljava/lang/String;)Ljava/lang/String;
++    move-result-object v0
++    const/4 v1, 0x0
++    invoke-virtual {p0, v0, v1}, Landroid/content/Context;->getSharedPreferences(Ljava/lang/String;I)Landroid/content/SharedPreferences;
++    move-result-object v0
++    const-string v1, "meboard_clipboard_retention_hours"
++    const-string v2, "1"
++    invoke-interface {v0, v1, v2}, Landroid/content/SharedPreferences;->getString(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
++    move-result-object v0
++    invoke-static {v0}, Ljava/lang/Integer;->parseInt(Ljava/lang/String;)I
++    move-result v0
++    const/4 v1, 0x1
++    if-eq v0, v1, :ok
++    const/4 v1, 0x3
++    if-eq v0, v1, :ok
++    const/4 v1, 0x6
++    if-eq v0, v1, :ok
++    const/16 v1, 0xc
++    if-eq v0, v1, :ok
++    const/16 v1, 0x18
++    if-eq v0, v1, :ok
++    const/4 v0, 0x1
++    :ok
++    :try_end_0
++    .catch Ljava/lang/Throwable; {:try_start_0 .. :try_end_0} :catch_0
++    return v0
++
++    :catch_0
++    move-exception v4
++    const/4 v0, 0x1
++    return v0
++.end method
++
++.method public static getMillis(Landroid/content/Context;)J
++    .locals 4
++    invoke-static {p0}, Lcom/mekromn/meboard/ClipboardRetentionConfig;->getHours(Landroid/content/Context;)I
++    move-result v0
++    int-to-long v0, v0
++    const-wide/32 v2, 0x36ee80
++    mul-long/2addr v0, v2
++    return-wide v0
++.end method
+--- /dev/null
++++ stage54b/smali_classes2/com/mekromn/meboard/ClipboardTimeoutPreference.smali
+@@ -0,0 +1,83 @@
++.class public final Lcom/mekromn/meboard/ClipboardTimeoutPreference;
++.super Ljava/lang/Object;
++.source "Meboard"
++
++.method private constructor <init>()V
++    .locals 0
++    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
++    return-void
++.end method
++
++.method public static add(Lcom/google/android/libraries/inputmethod/preferencewidgets/PreferenceHeaderFragment;)V
++    .locals 8
++    invoke-virtual {p0}, Lcdr;->n()Landroidx/preference/PreferenceScreen;
++    move-result-object v0
++    if-eqz v0, :done
++    const-string v1, "meboard_clipboard_retention_hours"
++    invoke-virtual {v0, v1}, Landroidx/preference/PreferenceGroup;->l(Ljava/lang/CharSequence;)Landroidx/preference/Preference;
++    move-result-object v2
++    if-nez v2, :done
++    invoke-virtual {p0}, Lad;->E()Lag;
++    move-result-object v2
++    if-eqz v2, :done
++    check-cast v2, Landroid/app/Activity;
++    new-instance v3, Landroidx/preference/DropDownPreference;
++    const/4 v4, 0x0
++    invoke-direct {v3, v2, v4}, Landroidx/preference/DropDownPreference;-><init>(Landroid/content/Context;Landroid/util/AttributeSet;)V
++    invoke-virtual {v3, v1}, Landroidx/preference/Preference;->P(Ljava/lang/String;)V
++    const-string v4, "Clipboard history timeout"
++    invoke-virtual {v3, v4}, Landroidx/preference/Preference;->V(Ljava/lang/CharSequence;)V
++    const/4 v4, 0x5
++    new-array v5, v4, [Ljava/lang/CharSequence;
++    const/4 v6, 0x0
++    const-string v7, "1 hour"
++    aput-object v7, v5, v6
++    const/4 v6, 0x1
++    const-string v7, "3 hours"
++    aput-object v7, v5, v6
++    const/4 v6, 0x2
++    const-string v7, "6 hours"
++    aput-object v7, v5, v6
++    const/4 v6, 0x3
++    const-string v7, "12 hours"
++    aput-object v7, v5, v6
++    const/4 v6, 0x4
++    const-string v7, "24 hours"
++    aput-object v7, v5, v6
++    invoke-virtual {v3, v5}, Landroidx/preference/DropDownPreference;->e([Ljava/lang/CharSequence;)V
++    new-array v5, v4, [Ljava/lang/CharSequence;
++    const/4 v6, 0x0
++    const-string v7, "1"
++    aput-object v7, v5, v6
++    const/4 v6, 0x1
++    const-string v7, "3"
++    aput-object v7, v5, v6
++    const/4 v6, 0x2
++    const-string v7, "6"
++    aput-object v7, v5, v6
++    const/4 v6, 0x3
++    const-string v7, "12"
++    aput-object v7, v5, v6
++    const/4 v6, 0x4
++    const-string v7, "24"
++    aput-object v7, v5, v6
++    iput-object v5, v3, Landroidx/preference/ListPreference;->h:[Ljava/lang/CharSequence;
++    invoke-static {v2}, Lcom/mekromn/meboard/ClipboardRetentionConfig;->getHours(Landroid/content/Context;)I
++    move-result v4
++    invoke-static {v4}, Ljava/lang/String;->valueOf(I)Ljava/lang/String;
++    move-result-object v4
++    invoke-virtual {v3, v4}, Landroidx/preference/ListPreference;->o(Ljava/lang/String;)V
++    invoke-virtual {v0, v3}, Landroidx/preference/PreferenceGroup;->an(Landroidx/preference/Preference;)V
++    :done
++    return-void
++.end method
+--- /dev/null
++++ stage54b/smali_classes2/com/mekromn/meboard/IncognitoToggleAction.smali
+@@ -0,0 +1,130 @@
++.class public final Lcom/mekromn/meboard/IncognitoToggleAction;
++.super Ljava/lang/Object;
++.source "Meboard"
++
++.method private constructor <init>()V
++    .locals 0
++    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
++    return-void
++.end method
++
++.method public static toggle(Landroid/content/Context;)Z
++    .locals 10
++    :try_start_0
++    move-object v0, p0
++    :unwrap
++    instance-of v1, v0, Landroid/inputmethodservice/InputMethodService;
++    if-nez v1, :service
++    instance-of v1, v0, Landroid/content/ContextWrapper;
++    if-eqz v1, :fail
++    move-object v1, v0
++    check-cast v1, Landroid/content/ContextWrapper;
++    invoke-virtual {v1}, Landroid/content/ContextWrapper;->getBaseContext()Landroid/content/Context;
++    move-result-object v1
++    if-eqz v1, :fail
++    if-eq v1, v0, :fail
++    move-object v0, v1
++    goto :unwrap
++    :service
++    check-cast v0, Landroid/inputmethodservice/InputMethodService;
++    invoke-virtual {v0}, Landroid/inputmethodservice/InputMethodService;->getCurrentInputEditorInfo()Landroid/view/inputmethod/EditorInfo;
++    move-result-object v1
++    if-eqz v1, :fail
++    invoke-static {}, Lowq;->f()Z
++    move-result v4
++    xor-int/lit8 v4, v4, 0x1
++    iget v2, v1, Landroid/view/inputmethod/EditorInfo;->imeOptions:I
++    const/high16 v3, 0x1000000
++    if-eqz v4, :active_clear
++    or-int/2addr v2, v3
++    goto :active_write
++    :active_clear
++    not-int v3, v3
++    and-int/2addr v2, v3
++    :active_write
++    iput v2, v1, Landroid/view/inputmethod/EditorInfo;->imeOptions:I
++    invoke-static {}, Lpyo;->b()Lpyo;
++    move-result-object v2
++    const-class v3, Lowq;
++    invoke-virtual {v2, v3}, Lpyo;->a(Ljava/lang/Class;)Lpyk;
++    move-result-object v2
++    check-cast v2, Lowq;
++    const/4 v5, 0x0
++    const/4 v6, 0x0
++    move-object v7, v1
++    move-object v8, v1
++    if-eqz v2, :publish
++    iget-boolean v5, v2, Lowq;->d:Z
++    iget-boolean v6, v2, Lowq;->g:Z
++    iget-object v3, v2, Lowq;->b:Landroid/view/inputmethod/EditorInfo;
++    if-eqz v3, :keep_b
++    move-object v7, v3
++    :keep_b
++    iget-object v3, v2, Lowq;->c:Landroid/view/inputmethod/EditorInfo;
++    if-eqz v3, :keep_c
++    move-object v8, v3
++    :keep_c
++    :publish
++    if-eqz v7, :skip_v7
++    iget v2, v7, Landroid/view/inputmethod/EditorInfo;->imeOptions:I
++    const/high16 v3, 0x1000000
++    if-eqz v4, :v7_clear
++    or-int/2addr v2, v3
++    goto :v7_write
++    :v7_clear
++    not-int v3, v3
++    and-int/2addr v2, v3
++    :v7_write
++    iput v2, v7, Landroid/view/inputmethod/EditorInfo;->imeOptions:I
++    :skip_v7
++    if-eqz v8, :skip_v8
++    iget v2, v8, Landroid/view/inputmethod/EditorInfo;->imeOptions:I
++    const/high16 v3, 0x1000000
++    if-eqz v4, :v8_clear
++    or-int/2addr v2, v3
++    goto :v8_write
++    :v8_clear
++    not-int v3, v3
++    and-int/2addr v2, v3
++    :v8_write
++    iput v2, v8, Landroid/view/inputmethod/EditorInfo;->imeOptions:I
++    :skip_v8
++    invoke-static {v7, v8, v5, v4, v6}, Lowq;->e(Landroid/view/inputmethod/EditorInfo;Landroid/view/inputmethod/EditorInfo;ZZZ)V
++    if-eqz v4, :toast_off
++    const-string v2, "Incognito mode on"
++    goto :toast
++    :toast_off
++    const-string v2, "Incognito mode off"
++    :toast
++    const/4 v3, 0x0
++    invoke-static {p0, v2, v3}, Landroid/widget/Toast;->makeText(Landroid/content/Context;Ljava/lang/CharSequence;I)Landroid/widget/Toast;
++    move-result-object v2
++    invoke-virtual {v2}, Landroid/widget/Toast;->show()V
++    const/4 v0, 0x1
++    :try_end_0
++    .catch Ljava/lang/Throwable; {:try_start_0 .. :try_end_0} :catch_0
++    return v0
++    :fail
++    const/4 v0, 0x0
++    return v0
++    :catch_0
++    move-exception v9
++    const/4 v0, 0x0
++    return v0
++.end method
+--- /dev/null
++++ stage54b/smali_classes2/com/mekromn/meboard/SpacebarSelectionAction.smali
+@@ -0,0 +1,57 @@
++.class public final Lcom/mekromn/meboard/SpacebarSelectionAction;
++.super Ljava/lang/Object;
++.source "Meboard"
++
++.method private constructor <init>()V
++    .locals 0
++    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
++    return-void
++.end method
++
++.method public static handle(Landroid/content/Context;)Z
++    .locals 4
++    :unwrap
++    instance-of v0, p0, Landroid/inputmethodservice/InputMethodService;
++    if-nez v0, :service
++    instance-of v0, p0, Landroid/content/ContextWrapper;
++    if-eqz v0, :fail
++    move-object v0, p0
++    check-cast v0, Landroid/content/ContextWrapper;
++    invoke-virtual {v0}, Landroid/content/ContextWrapper;->getBaseContext()Landroid/content/Context;
++    move-result-object v0
++    if-eqz v0, :fail
++    if-eq v0, p0, :fail
++    move-object p0, v0
++    goto :unwrap
++    :service
++    check-cast p0, Landroid/inputmethodservice/InputMethodService;
++    invoke-virtual {p0}, Landroid/inputmethodservice/InputMethodService;->getCurrentInputConnection()Landroid/view/inputmethod/InputConnection;
++    move-result-object v0
++    if-eqz v0, :fail
++    const/4 v1, 0x0
++    invoke-interface {v0, v1}, Landroid/view/inputmethod/InputConnection;->getSelectedText(I)Ljava/lang/CharSequence;
++    move-result-object v2
++    if-eqz v2, :select_all
++    invoke-interface {v2}, Ljava/lang/CharSequence;->length()I
++    move-result v2
++    if-lez v2, :select_all
++    const v2, 0x1020021
++    invoke-interface {v0, v2}, Landroid/view/inputmethod/InputConnection;->performContextMenuAction(I)Z
++    move-result v3
++    if-eqz v3, :fail
++    const/4 v0, 0x1
++    return v0
++    :select_all
++    const v2, 0x102001f
++    invoke-interface {v0, v2}, Landroid/view/inputmethod/InputConnection;->performContextMenuAction(I)Z
++    move-result v3
++    if-eqz v3, :fail
++    const/4 v0, 0x1
++    return v0
++    :fail
++    const/4 v0, 0x0
++    return v0
++.end method
