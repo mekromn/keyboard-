@@ -1,0 +1,7 @@
+Stage54d key icon targets (existing packaged vectors; no resource rebuild):
+
+- Shift key view IDs 0x7f0b0603 / 0x7f0b0604 -> drawable 0x7f08071a
+- Emoji/emoticon key view IDs 0x7f0b0608 / 0x7f0b060a -> drawable 0x7f0803f7
+- HEADER_MENU incognito remains Gboard's native mlr.c definition -> drawable 0x7f080715
+
+The Shift/Emoji fix targets the existing SoftKeyView ImageView child and leaves ActionDefs unchanged.
