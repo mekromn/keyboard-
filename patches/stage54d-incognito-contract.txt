@@ -1,0 +1,9 @@
+Stage54d native incognito contract:
+
+1. Toggle android.view.inputmethod.EditorInfo.IME_FLAG_NO_PERSONALIZED_LEARNING (0x01000000).
+2. Invoke Gboard InputBundleManager/Look.i() (InputBundle.reactivateIme).
+3. Reactivation re-runs active IME onActivate(EditorInfo, incognitoMode, keyboardType) using Leqy.G()/Looh.G().
+4. AbstractIme stores incognito in H and recomputes M (learning enabled); AbstractIme.o() returns false when H is true.
+5. Publish the normal Lowq.e(...) InputSessionNotification.
+6. mlq.hn delegates the normal input-view update to native mlq.d, allowing the stock mlr.c HEADER_MENU incognito SoftKeyDef/icon to represent the same real state.
+7. No toast is used.
