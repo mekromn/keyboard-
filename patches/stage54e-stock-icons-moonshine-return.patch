@@ -1,0 +1,135 @@
+--- stage54d/smali/com/google/android/libraries/inputmethod/widgets/SoftKeyView.smali
++++ stage54e/smali/com/google/android/libraries/inputmethod/widgets/SoftKeyView.smali
+@@ -1926,54 +1926,6 @@
+     .line 335
+     :cond_18
+-    invoke-virtual {v0}, Landroid/view/View;->getId()I
+-
+-    move-result v1
+-
+-    const v2, 0x7f0b0603
+-
+-    if-eq v1, v2, :cond_1a
+-
+-    const v2, 0x7f0b0604
+-
+-    if-eq v1, v2, :cond_1a
+-
+-    const v2, 0x7f0b0608
+-
+-    if-eq v1, v2, :cond_19
+-
+-    const v2, 0x7f0b060a
+-
+-    if-ne v1, v2, :cond_1b
+-
+-    :cond_19
+-    const v3, 0x7f0803f7
+-
+-    goto :goto_e
+-
+-    :cond_1a
+-    const v3, 0x7f08071a
+-
+-    :goto_e
+-    const v2, 0x7f0b03e3
+-
+-    invoke-virtual {v0, v2}, Landroid/view/View;->findViewById(I)Landroid/view/View;
+-
+-    move-result-object v2
+-
+-    instance-of v1, v2, Landroid/widget/ImageView;
+-
+-    if-eqz v1, :cond_1b
+-
+-    check-cast v2, Landroid/widget/ImageView;
+-
+-    invoke-virtual {v2, v3}, Landroid/widget/ImageView;->setImageResource(I)V
+-
+-    const/4 v1, 0x0
+-
+-    invoke-virtual {v2, v1}, Landroid/view/View;->setVisibility(I)V
+-
+-    :cond_1b
+     return-void
+ .end method
+--- stage54d/smali/com/mekromn/meboard/VoiceProviderChooser.smali
++++ stage54e/smali/com/mekromn/meboard/VoiceProviderChooser.smali
+@@ -164,7 +164,7 @@
+     invoke-direct {v3, v4}, Lcom/mekromn/meboard/VoiceResultCommitRunnable;-><init>(I)V
+-    const-wide/16 v4, 0x12c
++    const-wide/16 v4, 0x4b
+     invoke-virtual {v2, v3, v4, v5}, Landroid/os/Handler;->postDelayed(Ljava/lang/Runnable;J)Z
+@@ -341,6 +341,37 @@
+     return-void
+ .end method
++.method public static restoreIme()V
++    .locals 3
++    :try_start_0
++    sget-object v0, Lcom/mekromn/meboard/VoiceProviderChooser;->c:Ljava/lang/ref/WeakReference;
++    if-eqz v0, :cond_0
++    invoke-virtual {v0}, Ljava/lang/ref/WeakReference;->get()Ljava/lang/Object;
++    move-result-object v0
++    check-cast v0, Landroid/inputmethodservice/InputMethodService;
++    if-eqz v0, :cond_0
++    const/4 v1, 0x0
++    invoke-virtual {v0, v1}, Landroid/inputmethodservice/InputMethodService;->requestShowSelf(I)V
++    :try_end_0
++    .catch Ljava/lang/Throwable; {:try_start_0 .. :try_end_0} :catch_0
++    :cond_0
++    return-void
++    :catch_0
++    move-exception v2
++    return-void
++.end method
+@@ -435,6 +466,8 @@
+     .locals 8
+     :try_start_0
++    invoke-static {}, Lcom/mekromn/meboard/VoiceProviderChooser;->restoreIme()V
++
+     sget-object v0, Lcom/mekromn/meboard/VoiceProviderChooser;->e:Ljava/lang/String;
+@@ -465,6 +498,8 @@
+     if-eqz v3, :cond_0
++    invoke-static {}, Lcom/mekromn/meboard/VoiceProviderChooser;->restoreIme()V
++
+     invoke-static {}, Lcom/mekromn/meboard/VoiceProviderChooser;->clearPending()V
+@@ -482,6 +517,8 @@
+     if-eqz v3, :cond_1
++    invoke-static {}, Lcom/mekromn/meboard/VoiceProviderChooser;->restoreIme()V
++
+     invoke-static {}, Lcom/mekromn/meboard/VoiceProviderChooser;->clearPending()V
+--- stage54d/smali/com/mekromn/meboard/VoiceProviderRelayActivity.smali
++++ stage54e/smali/com/mekromn/meboard/VoiceProviderRelayActivity.smali
+@@ -15,7 +15,7 @@
+ .method protected onActivityResult(IILandroid/content/Intent;)V
+-    .locals 3
++    .locals 4
+@@ -45,6 +45,22 @@
+     :goto_0
+     invoke-virtual {p0}, Landroid/app/Activity;->finish()V
++    new-instance v0, Landroid/os/Handler;
++    invoke-static {}, Landroid/os/Looper;->getMainLooper()Landroid/os/Looper;
++    move-result-object v1
++    invoke-direct {v0, v1}, Landroid/os/Handler;-><init>(Landroid/os/Looper;)V
++    new-instance v1, Lcom/mekromn/meboard/VoiceImeRestoreRunnable;
++    invoke-direct {v1}, Lcom/mekromn/meboard/VoiceImeRestoreRunnable;-><init>()V
++    const-wide/16 v2, 0x19
++    invoke-virtual {v0, v1, v2, v3}, Landroid/os/Handler;->postDelayed(Ljava/lang/Runnable;J)Z
+     return-void
+--- /dev/null
++++ stage54e/smali/com/mekromn/meboard/VoiceImeRestoreRunnable.smali
+@@ -0,0 +1,22 @@
++.class public final Lcom/mekromn/meboard/VoiceImeRestoreRunnable;
++.super Ljava/lang/Object;
++.source "Meboard"
++.implements Ljava/lang/Runnable;
++.method public constructor <init>()V
++    .locals 0
++    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
++    return-void
++.end method
++.method public final run()V
++    .locals 0
++    invoke-static {}, Lcom/mekromn/meboard/VoiceProviderChooser;->restoreIme()V
++    return-void
++.end method
