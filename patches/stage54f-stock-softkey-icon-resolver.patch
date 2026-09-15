@@ -1,0 +1,89 @@
+--- /mnt/data/stage54e_smali_work/smali/com/google/android/libraries/inputmethod/widgets/SoftKeyView.smali	2026-09-15 21:53:06.488506174 +0000
++++ /mnt/data/stage54f_smali/com/google/android/libraries/inputmethod/widgets/SoftKeyView.smali	2026-09-15 22:53:54.540241551 +0000
+@@ -1489,9 +1489,7 @@
+     .line 131
+     if-nez v3, :cond_8
+ 
+-    .line 132
+-    .line 133
+-    goto :goto_5
++    goto :meboard_stock_icon_lookup
+ 
+     .line 134
+     :cond_8
+@@ -1518,7 +1516,43 @@
+     .line 145
+     move-result v3
+ 
+-    .line 146
++    if-nez v3, :meboard_stock_icon_resolved
++
++    :meboard_stock_icon_lookup
++    iget v3, v2, Lcom/google/android/libraries/inputmethod/metadata/SoftKeyDef;->d:I
++
++    sparse-switch v3, :meboard_stock_icon_switch
++
++    goto :goto_5
++
++    :meboard_shift_off
++    const v3, 0x7f0805fc
++    goto :meboard_stock_icon_resolved
++
++    :meboard_shift_on
++    const v3, 0x7f0805fd
++    goto :meboard_stock_icon_resolved
++
++    :meboard_shift_locked
++    const v3, 0x7f0805fb
++    goto :meboard_stock_icon_resolved
++
++    :meboard_keyboard_switch
++    const v3, 0x7f0805eb
++    goto :meboard_stock_icon_resolved
++
++    :meboard_space_icon
++    const v3, 0x7f080600
++    goto :meboard_stock_icon_resolved
++
++    :meboard_clipboard_state_a
++    const v3, 0x7f08056e
++    goto :meboard_stock_icon_resolved
++
++    :meboard_clipboard_state_b
++    const v3, 0x7f08056f
++
++    :meboard_stock_icon_resolved
+     invoke-static {v3}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
+ 
+     .line 147
+@@ -1927,6 +1961,30 @@
+     .line 335
+     :cond_18
+     return-void
++
++    :meboard_stock_icon_switch
++    .sparse-switch
++        0x7f0b0897 -> :meboard_shift_off
++        0x7f0b0898 -> :meboard_shift_on
++        0x7f0b2116 -> :meboard_shift_off
++        0x7f0b2117 -> :meboard_shift_locked
++        0x7f0b2250 -> :meboard_keyboard_switch
++        0x7f0b22a7 -> :meboard_clipboard_state_a
++        0x7f0b22a8 -> :meboard_clipboard_state_b
++        0x7f0b245e -> :meboard_shift_off
++        0x7f0b2460 -> :meboard_shift_locked
++        0x7f0b2462 -> :meboard_shift_locked
++        0x7f0b2463 -> :meboard_shift_off
++        0x7f0b2464 -> :meboard_shift_off
++        0x7f0b2465 -> :meboard_shift_on
++        0x7f0b2466 -> :meboard_shift_on
++        0x7f0b2467 -> :meboard_shift_on
++        0x7f0b2468 -> :meboard_shift_on
++        0x7f0b2469 -> :meboard_shift_on
++        0x7f0b24d5 -> :meboard_space_icon
++        0x7f0b24d7 -> :meboard_space_icon
++        0x7f0b24d9 -> :meboard_space_icon
++    .end sparse-switch
+ .end method
+ 
+ .method private final y(Ljava/lang/String;)V
