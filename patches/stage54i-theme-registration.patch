@@ -1,0 +1,14 @@
+Stage 54i theme catalog delta
+=============================
+
+Move Meboard out of the unlabeled Colors package list and add it to the labeled Default theme list as the first explicit pair:
+
++ <item>assets:theme_package_metadata_meboard.binarypb</item>
++ <item>Meboard</item>
+
+The existing Stage 54h assets remain:
+- assets/theme/theme_package_metadata_meboard.binarypb
+- assets/theme/style_sheet_meboard.binarypb
+- assets/theme/style_sheet_meboard_border.binarypb
+
+No theme-package format change is introduced by Stage 54i.
