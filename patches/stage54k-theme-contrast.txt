@@ -1,0 +1,1 @@
+Stage54k theme delta: remove the two custom contrast overrides for the action key and inherit the stock contrast computation. Keep the #5E97F6 action background and the exact user palette unchanged.
