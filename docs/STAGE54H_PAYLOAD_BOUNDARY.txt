@@ -1,0 +1,13 @@
+Stage 54h payload boundary vs Stage 54g
+
+- No DEX entry changed.
+- Changed existing non-signature entries:
+  - AndroidManifest.xml
+  - resources.arsc
+  - assets/theme/theme_package_metadata_meboard.binarypb
+  - assets/theme/style_sheet_meboard_border.binarypb
+- Replaced icon payloads:
+  - removed 5-density WebP adaptive background/foreground pairs
+  - added 5-density PNG adaptive background/foreground pairs
+- All keyboard behavior code remains byte-identical to Stage 54g.
+- SHA-256: a6c33fe7e872d8fdecb2cd89d43652b2b6a067124488003632216d924c21d38d
