@@ -1,0 +1,3 @@
+Theme crash root cause: Stage 54g's custom theme_package_metadata_meboard.binarypb was malformed protobuf. The Meboard main stylesheet parsed, but the package metadata failed protobuf field parsing. Stage 54h rebuilds it from the exact stock Google Dark metadata field topology and replaces the zero-byte Meboard border stylesheet with a valid one.
+
+Launcher icon root cause: Stage 54g's generated adaptive foreground bitmap contained visible raster artifacts. Stage 54h regenerates clean PNG density assets from the original supplied artwork, moves the artwork into the adaptive background layer, leaves the adaptive foreground transparent, and bumps versionCode to 175940519 to force icon cache invalidation.
