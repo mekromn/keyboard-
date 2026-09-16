@@ -1,0 +1,15 @@
+{
+  "base": "stage54n",
+  "apk_sha256": "52542527ba09ad1c53af13fa953200db008e67af88e7deea9b87179822f07daf",
+  "version_code": 175940525,
+  "version_name": "18.0.3.954559732-meboard55a",
+  "changed_apk_entries": ["AndroidManifest.xml", "classes.dex", "classes2.dex"],
+  "unchanged": ["classes3.dex", "classes4.dex", "resources.arsc", "Meboard theme assets", "stock assets", "native libraries"],
+  "dex_sha256": {
+    "classes.dex": "1b912f5f059f8815ccffd37e47268bad91e24bac73b48346e02415ae5c30baae",
+    "classes2.dex": "dec93216998374cb1878d0bdab870fabf75742efa274aebc9fb3a0e078bfa129",
+    "classes3.dex": "b28640798f657da1863686e51b715c71aa33faf480ef768dd8aba5df2d909248",
+    "classes4.dex": "35b4599dcfc0697653af1f2981fba27ea8f7dc5ea232bef8c84c29f03f4990c4"
+  },
+  "runtime_acceptance": "pending device test"
+}
