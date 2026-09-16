@@ -1,0 +1,65 @@
+Meboard Stage 54i fresh-install profile
+
+Guard:
+- apply only when firstInstallTime == lastUpdateTime
+- skip when meboard_factory_defaults_v1_applied == true
+- set sentinel after successful preference edit
+- catch Throwable and do not block app startup
+
+Boolean defaults:
+enable_number_row=true
+enable_number_row_in_password=true
+show_emoji_switch_key=true
+show_language_switch_key=false
+show_comma_key=false
+show_period_key=false
+show_suggestion_strip=true
+enable_free_cursor_by_long_press_space=false
+enable_double_space_period=true
+enable_autospace_after_punctuation=true
+return_to_prime_after_apostrophe=true
+enable_secondary_digits=true
+enable_secondary_symbols=true
+pref_enable_flick_symbols=false
+enable_sound_on_keypress=false
+enable_vibrate_on_keypress=true
+enable_popup_on_keypress=false
+show_launcher_icon=true
+pref_key_auto_correction=true
+enable_auto_capitalization=true
+enable_mark_misspelled_words=true
+pref_key_enable_grammar_checker=true
+pref_key_enable_inline_suggestion=true
+block_offensive_words=false
+show_suggestions=true
+next_word_prediction=true
+import_user_contacts=false
+enable_auto_spacing=true
+show_fix_it_button=true
+enable_gesture_input=true
+pref_gesture_preview_trail=true
+enable_scrub_delete=true
+enable_scrub_move=true
+enable_auto_paste_chips=true
+enable_entity_extraction=true
+enable_screenshot_in_clipboard=true
+enable_fast_access_bar=false
+pref_show_recent_emoji_in_symbol_keyboard=true
+enable_emojify=true
+pref_key_enable_conv2query=true
+pref_key_enable_emoji_suggestion=true
+enable_sticker_predictions_while_typing=true
+enable_emoji_to_expression=true
+enable_voice_input=true
+enable_ondevice_voice=true
+use_bluetooth_mic=true
+enable_enhanced_voice_typing_auto_punctuation=true
+enable_enhanced_voice_typing_automatic_language_switching=true
+show_emoji_button_on_toolbar=true
+enable_global_direct_to_dictation=false
+
+String defaults:
+meboard_clipboard_retention_hours=24
+pref_key_access_points_showing_order=clipboard;translate;textediting;settings;theme_setting;one_handed;floating_keyboard;gif_search;sticker;share;search
+
+Stock new-user toolbar fallbacks use the same order.
